@@ -145,4 +145,9 @@ public class UserDAOImpl implements UserDAO {
 
         return users;
     }
+
+    @Override
+    public void updateUserCredits(Users authenticatedUser) {
+        // to be written
+    }
 }

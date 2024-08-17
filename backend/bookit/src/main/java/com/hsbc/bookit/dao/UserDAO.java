@@ -13,4 +13,5 @@ public interface UserDAO {
     public List<Users>  findUsers();
     public List<Users> getUsersbyusername(String username);
 
+    void updateUserCredits(Users authenticatedUser);
 }

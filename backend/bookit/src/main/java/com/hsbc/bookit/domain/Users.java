@@ -1,7 +1,5 @@
 package com.hsbc.bookit.domain;
 
-import java.util.Objects;
-
 public class Users {
     private String id;
     private String username;
@@ -31,7 +29,7 @@ public class Users {
         this.username = username;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
