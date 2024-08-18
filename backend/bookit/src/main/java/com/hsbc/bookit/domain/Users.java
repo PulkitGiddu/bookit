@@ -29,7 +29,7 @@ public class Users {
         this.username = username;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

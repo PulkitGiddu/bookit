@@ -4,19 +4,17 @@ import com.hsbc.bookit.dao.AmenityDAO;
 import com.hsbc.bookit.dao.AmenityDAOImpl;
 import com.hsbc.bookit.domain.Amenities;
 import com.hsbc.bookit.domain.Users;
-import com.hsbc.bookit.exceptions.AccessDeniedException;
+import com.hsbc.bookit.exceptions.AmenitiesNotFoundException;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class AmenityService {
-    private final AmenityDAO amenityDAO = (AmenityDAO) new AmenityDAOImpl();
-    private final LoginService loginService = new LoginService();
+    private final AmenityDAO amenityDAO = new AmenityDAOImpl();
     private Users authenticatedUser;
 
-    public AmenityService(String username, String password) {
-        authenticatedUser = loginService.login(username, password);
-        if (authenticatedUser == null || !"manager".equalsIgnoreCase(authenticatedUser.getRole())) {
-            throw new AccessDeniedException("Only managers can perform this action!");
-        }
-    }
 
     public void addAmenity(String name, int cost) {
         Amenities amenity = new Amenities(name, cost);
@@ -34,7 +32,28 @@ public class AmenityService {
         System.out.println("Amenity deleted: " + amenityId);
     }
 
-    public void getAllAmenities() {
-        amenityDAO.getAllAmenities().forEach(System.out::println);
+
+    public int chooseAmenitiesAndCalculateCredits(List<String> selectedAmenities) {
+        // Get available amenities
+        List<Amenities> availableAmenities = amenityDAO.getAllAmenities();
+        System.out.println("Available amenities:");
+        // Create a set of available amenity names for quick lookup
+        Set<String> availableAmenityNames = new HashSet<>();
+        for (Amenities amenity : availableAmenities) {
+            availableAmenityNames.add(amenity.getName());
+            System.out.println(amenity.getName() + " - " + amenity.getCost() + " credits");
+        }
+
+        // Validate selected amenities
+        for (String selectedAmenity : selectedAmenities) {
+            if (!availableAmenityNames.contains(selectedAmenity)) {
+                throw new AmenitiesNotFoundException("Amenity not found: " + selectedAmenity);
+            }
+        }
+
+        // Calculate total credits
+        int totalCredits = amenityDAO.selectAmenitiesAndCalculateCredits(selectedAmenities);
+        System.out.println("Total credits for selected amenities: " + totalCredits);
+        return totalCredits;
     }
 }

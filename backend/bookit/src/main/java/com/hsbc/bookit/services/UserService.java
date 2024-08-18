@@ -12,10 +12,14 @@ import java.util.List;
 
 public class UserService {
     List<Users> users = new ArrayList<>();
+    private final Users authenticatedUser;
 
     UserDAO userdao = new UserDAOImpl();
-    LoginService ls = new LoginService();
-    Users authenticatedUser = ls.login("johndoe","password123");
+
+    public UserService( Users authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
+    }
+
     protected void checkAdminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")) {
             throw new AccessDeniedException("You do not have access to this feature!");

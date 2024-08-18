@@ -4,6 +4,7 @@ import com.hsbc.bookit.domain.Meetings;
 
 public interface MeetingDAO {
 
-    void bookMeeting(Meetings meeting);
+    void addMeeting(Meetings meeting);
+    void removeMeeting(String id);
 
 }
