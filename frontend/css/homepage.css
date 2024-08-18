@@ -41,6 +41,12 @@
     cursor: pointer;
 }
 
+/* loader */
+#myloader{
+    width: 100vw;
+    height: 100vh;
+}
+
 /* Style page content - use this if you want content to be on the same line as the sidebar when opened */
 #main {
     transition: margin-left .5s;
@@ -51,6 +57,7 @@
 footer {
     background: #222;
     color: #fff;
+    width: 100vw;
 }
 
 footer h5 {
