@@ -10,6 +10,15 @@ public class Meetings {
     private Date endTime;
     private String status;
 
+    public Meetings(int id, int roomId, String managerId, Date startTime, Date endTime, String status) {
+        this.id = id;
+        this.roomId = roomId;
+        this.managerId = managerId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

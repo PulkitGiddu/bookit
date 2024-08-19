@@ -12,6 +12,7 @@ import java.util.List;
 public class MeetingService {
 
     private int seatingcost;
+    List<Meetings> meetings;
     private final UserDAO userDAO = new UserDAOImpl();
     private final MeetingDAO meetingDAO = new MeetingDAOImpl();
     private final AmenityService amenityService= new AmenityService();
@@ -64,10 +65,12 @@ public class MeetingService {
 
 
     public void bookMeeting(int id,int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) {
-        checkAccess();
 
+        checkAccess(); // checks if authenticated user has access or not
+
+        //calculates cost of amenities based on the ones selected by the user. Throws exception if amenity is invalid
         int totalCostOfAmenities = amenityService.chooseAmenitiesAndCalculateCredits(selectedAmenities);
-        if(seatingCapacity <=5)
+        if(seatingCapacity <=5) //calculation of seating capacity credits
             seatingcost = 0;
         if(seatingCapacity>5 && seatingCapacity<= 10)
             seatingcost = 10;
@@ -76,32 +79,37 @@ public class MeetingService {
 
         int totalCost = seatingcost + totalCostOfAmenities;
 
-        Meetings meeting = new Meetings();
+        Meetings meeting = new Meetings(id,roomId, authenticatedUser.getId(), startTime,endTime,"Scheduled");
         meeting.setId(id);
         meeting.setRoomId(roomId);
         meeting.setManagerId(authenticatedUser.getId());
         meeting.setStartTime(startTime);
         meeting.setEndTime(endTime);
-        meeting.setStatus("Scheduled");
+        meeting.setStatus("Scheduled"); //meeting added to database
 
-        int credits_remaining = (authenticatedUser.getCredits() - totalCost);
+        int credits_remaining = (authenticatedUser.getCredits() - totalCost); //remaining credits
         if(authenticatedUser.getCredits() < 0){
             throw new NotEnoughCreditsException("You do not have enough credits!");
         }
-        if(adminAccess()){
+        if(adminAccess()){ //if admin, no need to delete credits
             meetingDAO.addMeeting(meeting);
             System.out.println("Meeting booked successfully, Remaining credits: " + authenticatedUser.getCredits());
-        } else {
+        } else { //if anybody else then subtract credits and update the table
             meetingDAO.addMeeting(meeting);
             userDAO.updateUserCredits(authenticatedUser, credits_remaining);
             System.out.println("Meeting booked successfully with total cost: " + totalCost + " credits. Remaining credits: " + credits_remaining);
         }
 
     }
-
+    //admin method to delete meetings
     public void deleteMeeting(String id){
         adminAccess();
         meetingDAO.removeMeeting(id);
 
+    }
+    //method to view all meetings(accessible to everyone)
+    public List<Meetings> viewMeetings(){
+        meetings = meetingDAO.viewAllMeetings();
+        return meetings;
     }
 }

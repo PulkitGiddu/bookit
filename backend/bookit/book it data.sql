@@ -69,5 +69,5 @@ INSERT INTO Meetings (id,room_id, manager_id, start_time, end_time, status) VALU
 
 
 select * from Meetings;
-
+select * from users;
 

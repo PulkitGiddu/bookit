@@ -11,26 +11,29 @@ public class RoomService {
     private final RoomDAO roomDAO = new RoomDAOImpl();
     private final LoginService loginService = new LoginService();
     private Users authenticatedUser;
-
-    public RoomService(String username, String password) {
-        authenticatedUser = loginService.login(username, password);
-        if (authenticatedUser == null || !"manager".equalsIgnoreCase(authenticatedUser.getRole())) {
-            throw new AccessDeniedException("Only managers can perform this action!");
+    protected boolean adminAccess() {
+        if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")){
+            return false;
         }
+        return true;
     }
 
+
     public void addRoom(String roomName, int seatingCapacity) {
+        adminAccess();
         Rooms room = new Rooms(roomName, seatingCapacity);
         roomDAO.addRoom(room);
         System.out.println("Room added: " + roomName);
     }
 
     public void updateRoom(int roomId, String roomName, int seatingCapacity) {
+        adminAccess();
         roomDAO.updateRoom(roomId, roomName, seatingCapacity);
         System.out.println("Room updated: " + roomName);
     }
 
     public void deleteRoom(int roomId) {
+        adminAccess();
         roomDAO.deleteRoom(roomId);
         System.out.println("Room deleted: " + roomId);
     }

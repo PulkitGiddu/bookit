@@ -32,6 +32,9 @@ public class AmenityService {
         System.out.println("Amenity deleted: " + amenityId);
     }
 
+    public List<Amenities> viewAllAmenities() {
+        return amenityDAO.getAllAmenities();
+    }
 
     public int chooseAmenitiesAndCalculateCredits(List<String> selectedAmenities) {
         // Get available amenities
