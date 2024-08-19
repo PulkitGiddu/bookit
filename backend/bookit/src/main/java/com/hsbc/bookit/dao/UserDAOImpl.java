@@ -147,7 +147,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void updateUserCredits(Users authenticatedUser) {
-        // to be written
+    public void updateUserCredits(Users authenticatedUser, int credits) {
+        try {
+            Connection con = ConManager.getConnection();
+            String sql = "UPDATE Users SET credits = ? WHERE id = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            // Set the new credits value
+            statement.setInt(1, credits);
+            // Set the user ID to identify which user's credits to update
+            statement.setInt(2, Integer.parseInt(authenticatedUser.getId()));
+            // Execute the update
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Credits updated successfully.");
+            } else {
+                System.out.println("No user found with the provided ID.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

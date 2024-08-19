@@ -9,4 +9,5 @@ public interface AmenityDAO {
     void updateAmenity(int amenityId, String name, int cost);
     void deleteAmenity(int amenityId);
     List<Amenities> getAllAmenities();
+    int selectAmenitiesAndCalculateCredits(List<String> selectedAmenities);
 }

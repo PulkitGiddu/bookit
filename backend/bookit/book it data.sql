@@ -13,7 +13,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Rooms (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id VARCHAR(10) PRIMARY KEY,
     name VARCHAR(255),
     seating_capacity INT
 );
@@ -34,7 +34,7 @@ CREATE TABLE RoomAmenities (
 
 CREATE TABLE Meetings (
     id VARCHAR(10) PRIMARY KEY,
-    room_id INT,
+    room_id VARCHAR(10),
     manager_id VARCHAR(10),
     start_time DATETIME,
     end_time DATETIME,
@@ -51,10 +51,10 @@ INSERT INTO Users (id, username, password, name, email, phone, role, credits) VA
 ("3", 'alicejohnson', 'password789', 'Alice Johnson', 'alice.johnson@example.com', '555-555-5555', 'Member', 25),
 ("4", 'bobwilliams', 'password321', 'Bob Williams', 'bob.williams@example.com', '444-444-4444', 'Member', 10);
 
-INSERT INTO Rooms (name, seating_capacity) VALUES 
-('Conference Room A', 10),
-('Conference Room B', 20),
-('Executive Room', 5);
+INSERT INTO Rooms (id,name, seating_capacity) VALUES 
+("1",'Conference Room A', 10),
+("2",'Conference Room B', 20),
+("3",'Executive Room', 5);
 
 INSERT INTO Amenities (name, cost) VALUES 
 ('Projector', 10),
@@ -62,17 +62,12 @@ INSERT INTO Amenities (name, cost) VALUES
 ('Coffee Machine', 15),
 ('Video Conferencing', 25);
 
-INSERT INTO RoomAmenities (room_id, amenity_id) VALUES 
-(1, 1),  -- Conference Room A has Projector
-(1, 2),  -- Conference Room A has Whiteboard
-(2, 1),  -- Conference Room B has Projector
-(2, 3),  -- Conference Room B has Coffee Machine
-(3, 4);  -- Executive Room has Video Conferencing
-
 INSERT INTO Meetings (id,room_id, manager_id, start_time, end_time, status) VALUES 
-(1,1, 2, '2024-08-20 09:00:00', '2024-08-20 10:00:00', 'Scheduled'),
-(2,2, 2, '2024-08-21 14:00:00', '2024-08-21 15:30:00', 'Scheduled'),
-(3,3, 2, '2024-08-22 11:00:00', '2024-08-22 12:00:00', 'Scheduled');
+(1,"1", 2, '2024-08-20 09:00:00', '2024-08-20 10:00:00', 'Scheduled'),
+(2,"2", 2, '2024-08-21 14:00:00', '2024-08-21 15:30:00', 'Scheduled'),
+(3,"3", 2, '2024-08-22 11:00:00', '2024-08-22 12:00:00', 'Scheduled');
 
 
-select * from users;
+select * from Meetings;
+
+

@@ -7,8 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmenityDAOImpl {
+public class AmenityDAOImpl implements AmenityDAO {
     private Connection conn;
+    List<Amenities> amenitiesList = new ArrayList<>();
 
     public AmenityDAOImpl() {
         conn = ConManager.getConnection(); // Utility to handle DB connection
@@ -52,7 +53,6 @@ public class AmenityDAOImpl {
 
     public List<Amenities> getAllAmenities() {
         String query = "SELECT * FROM Amenities";
-        List<Amenities> amenitiesList = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -65,4 +65,27 @@ public class AmenityDAOImpl {
         }
         return amenitiesList;
     }
+
+    public int selectAmenitiesAndCalculateCredits(List<String> selectedAmenities) {
+        int totalCredits = 0;
+
+        String query = "SELECT cost FROM Amenities WHERE name = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            for (String amenity : selectedAmenities) {
+                stmt.setString(1, amenity);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    int cost = rs.getInt("cost");
+                    totalCredits += cost;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalCredits;
+    }
+
 }

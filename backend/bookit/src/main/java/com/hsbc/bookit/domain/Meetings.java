@@ -5,7 +5,7 @@ import java.util.Date;
 public class Meetings {
     private int id;
     private int roomId;
-    private int managerId;
+    private String managerId;
     private Date startTime;
     private Date endTime;
     private String status;
@@ -26,11 +26,11 @@ public class Meetings {
         this.roomId = roomId;
     }
 
-    public int getManagerId() {
+    public String getManagerId() {
         return managerId;
     }
 
-    public void setManagerId(int managerId) {
+    public void setManagerId(String managerId) {
         this.managerId = managerId;
     }
 
