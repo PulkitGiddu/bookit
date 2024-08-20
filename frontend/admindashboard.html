@@ -33,7 +33,7 @@
                             <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Company</a></li>
-                            <li class="nav-item"><a class="btn btn-primary" href="#">Book a Demo</a></li>
+                            <li class="nav-item"><a class="btn btn-primary" href="#">Login</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -47,7 +47,7 @@
                 <h4>Admin Dashboard</h4>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <button class="nav-link text-light" href="./admindashboard.html" data-toggle="tooltip" data-placement="right" title="Admin Dashboard">Dashboard</button>
+                        <button class="nav-link text-light" onclick="href.location('./admindashboard.html');" data-toggle="tooltip" data-placement="right" title="Admin Dashboard">Dashboard</button>
                     </li>
                 </ul>
             </div>
@@ -62,46 +62,70 @@
                     </div>
                     <hr />
 
-                    <h4>View All Rooms</h4>
-                    <div class="m-1 row">
-                        <div class="col-md-12">
-                            <div class="card text-center mb-4">
-                                <div class="card-body d-flex justify-content-around">
-                                    <img src="./assets/img/meeting_presentation.png" alt="Organize Meeting" height="400px">
-                                    <div class="p-3" >
-                                        <h2 class="card-title m-2 text-decoration-underline">Training Room 3</h2>
-                                        <div class="card-text m-2"> <b>Room Type:</b> Training Room</div>
-                                        <div class="card-text m-2"> <b>Seating Capacity:</b> 30</div>
-                                        <div class="card-text m-2 d-flex "> <b>Amenities:</b>
-                                            <ul>
-                                                <li>Whiteboard & Projector</li>
-                                                <li>Wifi & Projector</li>
-                                                <li>Conference Call Facility</li>
-                                                <li>Projector</li>
-                                            </ul>    
+                    <div id="allRoomsInfo">
+                        <h4>View All Rooms</h4>
+                        <div class="m-1 row">
+                            <div class="col-md-12">
+                                <div class="card text-center mb-4">
+                                    <div class="card-body d-flex justify-content-around">
+                                        <img src="./assets/img/meeting_presentation.png" alt="Organize Meeting" height="400px">
+                                        <div class="p-3" >
+                                            <h2 class="card-title m-2 text-decoration-underline">Training Room 3</h2>
+                                            <div class="card-text m-2"> <b>Room Type:</b> Training Room</div>
+                                            <div class="card-text m-2"> <b>Seating Capacity:</b> 30</div>
+                                            <div class="card-text m-2 d-flex "> <b>Amenities:</b>
+                                                <ul>
+                                                    <li>Whiteboard & Projector</li>
+                                                    <li>Wifi & Projector</li>
+                                                    <li>Conference Call Facility</li>
+                                                    <li>Projector</li>
+                                                </ul>    
+                                            </div>
+                                            <a href="organize-meeting.html" class="btn btn-primary mt-auto">Edit Room Screen</a>
                                         </div>
-                                        <a href="organize-meeting.html" class="btn btn-primary mt-auto">Edit Room Screen</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card text-center mb-4">
-                                <div class="card-body">
-                                    <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/solid/square-poll-vertical.svg" alt="View Analytics" class="mb-3" height="40px">
-                                    <h5 class="card-title">View Analytics</h5>
-                                    <p class="card-text">Analyze room usage and booking trends.</p>
-                                    <a href="analytics.html" class="btn btn-primary mt-auto">Go</a>
+                            <div class="col-md-12">
+                                <div class="card text-center mb-4">
+                                    <div class="card-body d-flex justify-content-around">
+                                        <img src="./assets/img/meeting_presentation.png" alt="Organize Meeting" height="400px">
+                                        <div class="p-3" >
+                                            <h2 class="card-title m-2 text-decoration-underline">Conference Call Room</h2>
+                                            <div class="card-text m-2"> <b>Room Type:</b> Conference Call</div>
+                                            <div class="card-text m-2"> <b>Seating Capacity:</b> 20</div>
+                                            <div class="card-text m-2 d-flex "> <b>Amenities:</b>
+                                                <ul>
+                                                    <li>Whiteboard & Projector</li>
+                                                    <li>Wifi & Projector</li>
+                                                    <li>Conference Call Facility</li>
+                                                    <li>Projector</li>
+                                                </ul>    
+                                            </div>
+                                            <a href="organize-meeting.html" class="btn btn-primary mt-auto">Edit Room Screen</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card text-center mb-4">
-                                <div class="card-body">
-                                    <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/solid/user-group.svg" alt="Manage Team" class="mb-3" height="40px">
-                                    <h5 class="card-title">Manage Team</h5>
-                                    <p class="card-text">Manage your team's access and roles.</p>
-                                    <a href="manageTeam.html" class="btn btn-primary mt-auto">Go</a>
+                            <div class="col-md-12">
+                                <div class="card text-center mb-4">
+                                    <div class="card-body d-flex justify-content-around">
+                                        <img src="./assets/img/meeting_presentation.png" alt="Organize Meeting" height="400px">
+                                        <div class="p-3" >
+                                            <h2 class="card-title m-2 text-decoration-underline">Meeting Room</h2>
+                                            <div class="card-text m-2"> <b>Room Type:</b> Business</div>
+                                            <div class="card-text m-2"> <b>Seating Capacity:</b> 45</div>
+                                            <div class="card-text m-2 d-flex "> <b>Amenities:</b>
+                                                <ul>
+                                                    <li>Whiteboard & Projector</li>
+                                                    <li>Wifi & Projector</li>
+                                                    <li>Conference Call Facility</li>
+                                                    <li>Projector</li>
+                                                </ul>    
+                                            </div>
+                                            <a href="organize-meeting.html" class="btn btn-primary mt-auto">Edit Room Screen</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
