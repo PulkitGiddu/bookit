@@ -6,7 +6,8 @@ public class Rooms {
     private String name;
     private int seatingCapacity;
 
-    public Rooms(String name, int seatingCapacity) {
+    public Rooms(int id,String name, int seatingCapacity) {
+        this.id = id;
         this.name = name;
         this.seatingCapacity = seatingCapacity;
     }

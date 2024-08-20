@@ -6,7 +6,12 @@ import com.hsbc.bookit.util.ConManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MeetingDAOImpl implements MeetingDAO{
     private Connection conn;
@@ -45,5 +50,34 @@ public class MeetingDAOImpl implements MeetingDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Meetings> viewAllMeetings() {
+        String query = "SELECT * FROM Meetings";
+        List<Meetings> meetings = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            // Iterate through the result set to populate the meetings list
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int roomId = rs.getInt("room_id");
+                String managerId = rs.getString("manager_id");
+                Date startTime = rs.getTimestamp("start_time");
+                Date endTime = rs.getTimestamp("end_time");
+                String status = rs.getString("status");
+
+                // Create a Meeting object and add it to the list
+                Meetings meeting = new Meetings(id,roomId,managerId,startTime,endTime,status);
+                meetings.add(meeting);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return meetings;
     }
 }
