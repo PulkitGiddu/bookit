@@ -1,7 +1,5 @@
 package com.hsbc.bookit;
 
-import com.hsbc.bookit.dao.UserDAO;
-import com.hsbc.bookit.dao.UserDAOImpl;
 import com.hsbc.bookit.domain.Amenities;
 import com.hsbc.bookit.domain.Meetings;
 import com.hsbc.bookit.domain.Users;
@@ -16,23 +14,23 @@ import java.util.List;
 public class MainApp {
     public static void main(String[] args) {
         System.out.println("Building an automated booking system!");
-        RoomService rs = new RoomService();
-        LoginService ls = new LoginService();
-        AmenityService as = new AmenityService();
+        RoomServiceImpl rs = new RoomServiceImpl();
+        LoginServiceImpl ls = new LoginServiceImpl();
+        AmenityServiceImpl as = new AmenityServiceImpl();
         //this sends data to the login service and dao which checks if the username and pwd is correct otherwise throws exception
-        Users authenticatedUser = ls.login("janesmith","password456"); //scanner in these
+        Users authenticatedUser = ls.login("johndoe","password123"); //scanner in these
         ls.resetCredits(authenticatedUser); // resets the credits of the manager if it is monday, else just displays the total available credits.
-        UserService us = new UserService(authenticatedUser);
-        MeetingService ms = new MeetingService(authenticatedUser);
+        UserServiceImpl us = new UserServiceImpl(authenticatedUser);
+        MeetingServiceImpl ms = new MeetingServiceImpl(authenticatedUser);
 
-/*
+
         us.addUserdata(); // admin method. In user service, scanner in the details
         us.deleteUserdata(); //admin method. Similarly ask for id to delete in user service
 
         us.getAllUsers(); // admin method
         System.out.println("---------------------");
         us.getUsersByUsername(); // admin method. Ask for username using scanner
-*/
+
         //other admin methods
         //all these inputs need to be taken in using scanners
         rs.addRoom(4,"Conference Room C",25);
@@ -61,8 +59,8 @@ public class MainApp {
         //these need to be scanner in'd in the while loop. (Only accessible to the manager)
         //accessible to manager and admin
 
-        ms.bookMeetingWithDefaultRoom(17,2,startTime,endTime, MeetingService.DefaultRoom.CLASSROOM_TRAINING);
-//        ms.bookMeetingWithCustomRoom(13,1, startTime, endTime, selectedAmenities, 10);
+        ms.bookMeetingWithDefaultRoom(19,2,startTime,endTime, MeetingServiceImpl.DefaultRoom.CLASSROOM_TRAINING);
+        ms.bookMeetingWithCustomRoom(21,1, startTime, endTime, selectedAmenities, 10);
 
 
 }}
