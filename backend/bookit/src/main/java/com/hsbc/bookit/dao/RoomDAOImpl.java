@@ -19,10 +19,11 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public void addRoom(Rooms room) {
-        String query = "INSERT INTO Rooms (name, seating_capacity) VALUES (?, ?)";
+        String query = "INSERT INTO Rooms (id,name, seating_capacity) VALUES (?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, room.getName());
-            stmt.setInt(2, room.getSeatingCapacity());
+            stmt.setInt(1, room.getId());
+            stmt.setString(2, room.getName());
+            stmt.setInt(3, room.getSeatingCapacity());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,7 +61,7 @@ public class RoomDAOImpl implements RoomDAO {
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                Rooms room = new Rooms(rs.getString("name"), rs.getInt("seating_capacity"));
+                Rooms room = new Rooms(rs.getInt("id"),rs.getString("name"), rs.getInt("seating_capacity"));
                 room.setId(rs.getInt("id"));
                 roomsList.add(room);
             }
@@ -77,9 +78,9 @@ public class RoomDAOImpl implements RoomDAO {
     public List<Rooms> getDefaultRooms() {
         // These are the predefined default rooms
         return Arrays.asList(
-                new Rooms("Classroom Training", 10),  // Whiteboard, Projector
-                new Rooms("Online Training", 10),     // Wifi, Projector
-                new Rooms("Conference Call", 5),      // Conference Call
-                new Rooms("Business Call", 5));         // Projector}
+                new Rooms(3,"Classroom Training", 10),  // Whiteboard, Projector
+                new Rooms(4,"Online Training", 10),     // Wifi, Projector
+                new Rooms(5,"Conference Call", 5),      // Conference Call
+                new Rooms(6,"Business Call", 5));         // Projector}
     }
 }

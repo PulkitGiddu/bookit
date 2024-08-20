@@ -19,9 +19,9 @@ public class RoomService {
     }
 
 
-    public void addRoom(String roomName, int seatingCapacity) {
+    public void addRoom(int id,String roomName, int seatingCapacity) {
         adminAccess();
-        Rooms room = new Rooms(roomName, seatingCapacity);
+        Rooms room = new Rooms(id,roomName, seatingCapacity);
         roomDAO.addRoom(room);
         System.out.println("Room added: " + roomName);
     }

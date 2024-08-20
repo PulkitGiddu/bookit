@@ -25,18 +25,17 @@ public class MainApp {
         UserService us = new UserService(authenticatedUser);
         MeetingService ms = new MeetingService(authenticatedUser);
 
-
+/*
         us.addUserdata(); // admin method. In user service, scanner in the details
         us.deleteUserdata(); //admin method. Similarly ask for id to delete in user service
 
         us.getAllUsers(); // admin method
         System.out.println("---------------------");
         us.getUsersByUsername(); // admin method. Ask for username using scanner
-
+*/
         //other admin methods
         //all these inputs need to be taken in using scanners
-        rs.addRoom("Conference Room C",25);
-        rs.deleteRoom(1);
+        rs.addRoom(4,"Conference Room C",25);
         rs.updateRoom(1,"Conference Room A",30); //checks id and updates name and seating capacity
         ms.deleteMeeting("1"); //admin method only
         //general methods(can be called by manager, admin or member)
