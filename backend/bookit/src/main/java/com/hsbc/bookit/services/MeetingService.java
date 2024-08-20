@@ -2,6 +2,7 @@ package com.hsbc.bookit.services;
 
 import com.hsbc.bookit.dao.*;
 import com.hsbc.bookit.domain.Meetings;
+import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.AccessDeniedException;
 import com.hsbc.bookit.exceptions.NotEnoughCreditsException;
@@ -11,102 +12,143 @@ import java.util.List;
 
 public class MeetingService {
 
-    private int seatingcost;
     List<Meetings> meetings;
+    private int seatingcost;
     private final UserDAO userDAO = new UserDAOImpl();
     private final MeetingDAO meetingDAO = new MeetingDAOImpl();
-    private final AmenityService amenityService= new AmenityService();
+    private final AmenityService amenityService = new AmenityService();
+    private final RoomDAO roomDAO = new RoomDAOImpl();  // Add the RoomDAO for predefined rooms
 
     Users authenticatedUser;
 
     public MeetingService(Users authenticatedUser) {
         this.authenticatedUser = authenticatedUser;
     }
+
     protected boolean adminAccess() {
-        if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")){
+        if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")) {
             return false;
         }
         return true;
     }
-
 
     protected boolean checkAccess() {
         if (authenticatedUser == null ||
                 (!authenticatedUser.getRole().equalsIgnoreCase("manager") &&
                         !authenticatedUser.getRole().equalsIgnoreCase("admin"))) {
             throw new AccessDeniedException("You do not have access to this feature!");
-
         }
         return true;
     }
 
-//    // Credits cost for seating capacity and amenities
-//    private final Map<String, Integer> amenityCostMap = new HashMap<String, Integer>() {{
-//        put("Projector", 5);
-//        put("Wifi", 10);
-//        put("Conference Call", 15);
-//        put("Whiteboard", 5);
-//        put("Water Dispenser", 5);
-//        put("TV", 10);
-//        put("Coffee Machine", 10);
-//    }};
-//
-//    private final Map<Integer, Integer> seatingCostMap = new HashMap<Integer, Integer>() {{
-//        put(5, 0);  // seating capacity <= 5
-//        put(10, 10);  // seating capacity <= 10
-//        put(20, 20);  // seating capacity <= 20
-//    }};
+    // ======================================================================= //
+    // Enum to define default room options
+    public enum DefaultRoom {
+        CLASSROOM_TRAINING("Whiteboard, Projector", 10),
+        ONLINE_TRAINING("Wifi, Projector", 15),
+        CONFERENCE_CALL("Conference Call", 15),
+        BUSINESS_CALL("Projector", 5);
 
-//
-//    public List<Amenities> viewAmenities() {
-//        checkAccess();
-//        return amenityDAO.getAllAmenities(); // Retrieves available amenities from the DB
-//    }
+        private final String amenities;
+        private final int cost;
 
+        DefaultRoom(String amenities, int cost) {
+            this.amenities = amenities;
+            this.cost = cost;
+        }
 
-    public void bookMeeting(int id,int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) {
+        public String getAmenities() {
+            return amenities;
+        }
 
-        checkAccess(); // checks if authenticated user has access or not
+        public int getCost() {
+            return cost;
+        }
+    }
 
-        //calculates cost of amenities based on the ones selected by the user. Throws exception if amenity is invalid
-        int totalCostOfAmenities = amenityService.chooseAmenitiesAndCalculateCredits(selectedAmenities);
-        if(seatingCapacity <=5) //calculation of seating capacity credits
-            seatingcost = 0;
-        if(seatingCapacity>5 && seatingCapacity<= 10)
-            seatingcost = 10;
-        if(seatingCapacity > 10)
-            seatingcost= 20;
+    // ==============================================================================================================//
+    // Function to get predefined room options
+    public List<Rooms> getDefaultRoomOptions() {
+        return roomDAO.getDefaultRooms();
+    }
 
-        int totalCost = seatingcost + totalCostOfAmenities;
+    // Function to select and book a predefined room
+    public void bookMeetingWithDefaultRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, DefaultRoom roomOption) {
+        checkAccess();
 
-        Meetings meeting = new Meetings(id,roomId, authenticatedUser.getId(), startTime,endTime,"Scheduled");
+        // Calculate total cost based on default room option
+        int totalCost = roomOption.getCost();
+
+        Meetings meeting = new Meetings(id, roomId, authenticatedUser.getId(),startTime,endTime,"Scheduled");
         meeting.setId(id);
         meeting.setRoomId(roomId);
         meeting.setManagerId(authenticatedUser.getId());
         meeting.setStartTime(startTime);
         meeting.setEndTime(endTime);
-        meeting.setStatus("Scheduled"); //meeting added to database
+        meeting.setStatus("Scheduled");
 
-        int credits_remaining = (authenticatedUser.getCredits() - totalCost); //remaining credits
-        if(authenticatedUser.getCredits() < 0){
+        int credits_remaining = authenticatedUser.getCredits() - totalCost;
+
+        if (credits_remaining < 0) {
             throw new NotEnoughCreditsException("You do not have enough credits!");
         }
-        if(adminAccess()){ //if admin, no need to delete credits
+
+        if (adminAccess()) {
             meetingDAO.addMeeting(meeting);
             System.out.println("Meeting booked successfully, Remaining credits: " + authenticatedUser.getCredits());
-        } else { //if anybody else then subtract credits and update the table
+        } else {
+            meetingDAO.addMeeting(meeting);
+            userDAO.updateUserCredits(authenticatedUser, credits_remaining);
+            System.out.println("Meeting booked successfully with default room: " + roomOption.name() +
+                    ". Total cost: " + totalCost + " credits. Remaining credits: " + credits_remaining);
+        }
+    }
+    // =========================================================================================================== //
+    // Function to book meeting with custom options (seating capacity and selected amenities)
+    public void bookMeetingWithCustomRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) {
+        checkAccess();
+
+        int totalCostOfAmenities = amenityService.chooseAmenitiesAndCalculateCredits(selectedAmenities);
+
+        // Calculate seating cost based on seating capacity
+        if (seatingCapacity <= 5)
+            seatingcost = 0;
+        if (seatingCapacity > 5 && seatingCapacity <= 10)
+            seatingcost = 10;
+        if (seatingCapacity > 10)
+            seatingcost = 20;
+
+        int totalCost = seatingcost + totalCostOfAmenities;
+
+        Meetings meeting = new Meetings(id,roomId,authenticatedUser.getId(),startTime,endTime,"Scheduled");
+        meeting.setId(id);
+        meeting.setRoomId(roomId);
+        meeting.setManagerId(authenticatedUser.getId());
+        meeting.setStartTime(startTime);
+        meeting.setEndTime(endTime);
+        meeting.setStatus("Scheduled");
+
+        int credits_remaining = authenticatedUser.getCredits() - totalCost;
+        if (credits_remaining < 0) {
+            throw new NotEnoughCreditsException("You do not have enough credits!");
+        }
+
+        if (adminAccess()) {
+            meetingDAO.addMeeting(meeting);
+            System.out.println("Meeting booked successfully, Remaining credits: " + authenticatedUser.getCredits());
+        } else {
             meetingDAO.addMeeting(meeting);
             userDAO.updateUserCredits(authenticatedUser, credits_remaining);
             System.out.println("Meeting booked successfully with total cost: " + totalCost + " credits. Remaining credits: " + credits_remaining);
         }
-
     }
-    //admin method to delete meetings
-    public void deleteMeeting(String id){
+
+    // Function to delete a meeting
+    public void deleteMeeting(String id) {
         adminAccess();
         meetingDAO.removeMeeting(id);
-
     }
+
     //method to view all meetings(accessible to everyone)
     public List<Meetings> viewMeetings(){
         meetings = meetingDAO.viewAllMeetings();

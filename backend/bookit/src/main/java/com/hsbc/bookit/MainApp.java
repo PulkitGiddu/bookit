@@ -61,7 +61,9 @@ public class MainApp {
         List<String> selectedAmenities = Arrays.asList("hja", "Coffee Machine"); // selected amenities of the user.
         //these need to be scanner in'd in the while loop. (Only accessible to the manager)
         //accessible to manager and admin
-        ms.bookMeeting(13,1, startTime, endTime, selectedAmenities, 10);
+
+        ms.bookMeetingWithDefaultRoom(17,2,startTime,endTime, MeetingService.DefaultRoom.CLASSROOM_TRAINING);
+//        ms.bookMeetingWithCustomRoom(13,1, startTime, endTime, selectedAmenities, 10);
 
 
 }}

@@ -5,9 +5,10 @@ import com.hsbc.bookit.util.ConManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class RoomDAOImpl implements RoomDAO{
+public class RoomDAOImpl implements RoomDAO {
 
     // Assume we have a utility class for DB connection
     private Connection conn;
@@ -67,5 +68,18 @@ public class RoomDAOImpl implements RoomDAO{
             e.printStackTrace();
         }
         return roomsList;
+    }
+
+
+    // ****************************************************************** //
+    // Method to fetch room by name Default
+    @Override
+    public List<Rooms> getDefaultRooms() {
+        // These are the predefined default rooms
+        return Arrays.asList(
+                new Rooms("Classroom Training", 10),  // Whiteboard, Projector
+                new Rooms("Online Training", 10),     // Wifi, Projector
+                new Rooms("Conference Call", 5),      // Conference Call
+                new Rooms("Business Call", 5));         // Projector}
     }
 }

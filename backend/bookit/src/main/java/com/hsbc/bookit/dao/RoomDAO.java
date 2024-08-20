@@ -9,4 +9,5 @@ public interface RoomDAO {
     void updateRoom(int roomId, String roomName, int seatingCapacity);
     void deleteRoom(int roomId);
     List<Rooms> getAllRooms();
+    List<Rooms> getDefaultRooms();
 }
