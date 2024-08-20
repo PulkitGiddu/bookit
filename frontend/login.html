@@ -55,14 +55,14 @@
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <h1 class="text-center mb-4">Login</h1>
-                    <form>
+                    <!-- <form method="POST"> -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" required>
+                            <input type="email" name="email" class="form-control" id="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" required>
+                            <input type="password" name="password" class="form-control" id="password" required>
                         </div>
                         <label class="form-label">Role</label>
                         <div class="d-flex flex-row justify-content-center mb-3">
@@ -73,14 +73,20 @@
                                 </label>
                             </div>
                             <div class="form-check mx-3">
-                                <input class="form-check-input" name="usertype" type="radio" id="user" value="user">
-                                <label class="form-check-label" for="user">
-                                    User
+                                <input class="form-check-input" name="usertype" type="radio" id="manager" value="manager">
+                                <label class="form-check-label" for="manager">
+                                    Manager
+                                </label>
+                            </div>
+                            <div class="form-check mx-3">
+                                <input class="form-check-input" name="usertype" type="radio" id="member" value="member">
+                                <label class="form-check-label" for="member">
+                                    Member
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
+                        <button type="submit" onclick="validateinput();" class="btn btn-primary w-100">Login</button>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
