@@ -1,11 +1,13 @@
 function showCreateRoom() {
     document.getElementById('createRoomDiv').style.display = 'block';
     document.getElementById('editRoomDiv').style.display = 'none';
+    document.getElementById('allRoomsInfo').style.display = 'none';
 }
 
 function showEditRoom() {
     document.getElementById('createRoomDiv').style.display = 'none';
     document.getElementById('editRoomDiv').style.display = 'block';
+    document.getElementById('allRoomsInfo').style.display = 'none';
 }
   
 window.addEventListener('load', function() {

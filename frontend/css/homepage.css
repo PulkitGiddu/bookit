@@ -3,13 +3,14 @@
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 1040;
     top: 0;
     left: 0;
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    
 }
 
 /* Sidebar links */
@@ -51,6 +52,11 @@
 #main {
     transition: margin-left .5s;
     padding: 16px;
+    /* background-image: url("./../assets/img/backgroundimages.jpeg");
+    background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
+    /* background-position: center;
+    background-size: 100vw 100vh; */
 }
 
 
@@ -83,4 +89,37 @@ footer .list-inline-item .btn {
 footer .list-inline-item .btn:hover {
     color: #fff;
     background-color: #666;
+}
+
+
+/* # below css for  */
+header {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030; /* Ensures the header stays on top of other content */
+    border-bottom: 1px solid #ccc; /* Optional: adds a bottom border to the header */
+}
+
+.container-fluid {
+    max-width: 100%;
+    padding: 0 20px; /* Adjust padding as necessary */
+}
+
+.navbar-brand {
+    margin-right: auto;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar-toggler {
+    margin-left: auto;
+}
+
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none; /* Hide the toggle button on larger screens */
+    }
 }
