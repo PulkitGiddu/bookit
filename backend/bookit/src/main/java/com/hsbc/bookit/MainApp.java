@@ -9,58 +9,270 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
+import static com.mysql.cj.protocol.a.MysqlTextValueDecoder.getTimestamp;
 
 //testing all the methods for now
 public class MainApp {
     public static void main(String[] args) {
-        System.out.println("Building an automated booking system!");
-        RoomServiceImpl rs = new RoomServiceImpl();
-        LoginServiceImpl ls = new LoginServiceImpl();
-        AmenityServiceImpl as = new AmenityServiceImpl();
-        //this sends data to the login service and dao which checks if the username and pwd is correct otherwise throws exception
-        Users authenticatedUser = ls.login("johndoe","password123"); //scanner in these
-        ls.resetCredits(authenticatedUser); // resets the credits of the manager if it is monday, else just displays the total available credits.
-        UserServiceImpl us = new UserServiceImpl(authenticatedUser);
-        MeetingServiceImpl ms = new MeetingServiceImpl(authenticatedUser);
+
+        Scanner scanner = new Scanner(System.in);
+        LoginServiceImpl loginService = new LoginServiceImpl();
+
+        // Authentication
+        System.out.println("Enter username:");
+        String username = scanner.nextLine();
+        System.out.println("Enter password:");
+        String password = scanner.nextLine();
+        Users authenticatedUser = loginService.login(username, password);
+        loginService.resetCredits(authenticatedUser);
+
+        // Services initialization
+        RoomService roomService = new RoomServiceImpl();
+        AmenityService  amenityService = new AmenityServiceImpl();
+        UserService userService = new UserServiceImpl(authenticatedUser);
+        MeetingService meetingService = new MeetingServiceImpl(authenticatedUser);
+
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\n---- Booking System Menu ----");
+            System.out.println("1. Admin Menu");
+            System.out.println("2. Manager Menu");
+            System.out.println("3. Member Menu");
+            System.out.println("4. Exit");
+            System.out.print("Choose your option: ");
+            int choice1 = Integer.parseInt(scanner.nextLine());
+
+            switch (choice1) {
+                case 1:
+                    if (authenticatedUser.getRole().equalsIgnoreCase("admin")) {
+                        adminMenu(scanner, userService, roomService, meetingService);
+                    } else {
+                        System.out.println("Access denied. Admin access only.");
+                    }
+                    break;
+
+                case 2:
+                    if (authenticatedUser.getRole().equalsIgnoreCase("manager")) {
+                        managerMenu(scanner, roomService, amenityService, meetingService);
+                    } else {
+                        System.out.println("Access denied. Manager access only.");
+                    }
+                    break;
+
+                case 3:
+                     memberMenu(scanner, meetingService);
+                    break;
+
+                case 4:
+                    exit = true;
+                    System.out.println("Exiting the system. Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Please choose a valid option.");
+            }
+        }
+
+        scanner.close();
+    }
 
 
-        us.addUserdata(); // admin method. In user service, scanner in the details
-        us.deleteUserdata(); //admin method. Similarly ask for id to delete in user service
+    private static void adminMenu(Scanner scanner, UserService userService, RoomService roomService, MeetingService meetingService) {
+        boolean exit = false;
 
-        us.getAllUsers(); // admin method
-        System.out.println("---------------------");
-        us.getUsersByUsername(); // admin method. Ask for username using scanner
+        while (!exit) {
+            System.out.println("\n---- Admin Menu ----");
+            System.out.println("1. Add User");
+            System.out.println("2. Delete User");
+            System.out.println("3. View All Users");
+            System.out.println("4. Get User by Username");
+            System.out.println("5. Add Room");
+            System.out.println("6. Update Room");
+            System.out.println("7. Delete Meeting");
+            System.out.println("8. Back to Main Menu");
+            System.out.print("Choose your option: ");
+            int adminOption = Integer.parseInt(scanner.nextLine());
 
-        //other admin methods
-        //all these inputs need to be taken in using scanners
-        rs.addRoom(4,"Conference Room C",25);
-        rs.updateRoom(1,"Conference Room A",30); //checks id and updates name and seating capacity
-        ms.deleteMeeting("1"); //admin method only
-        //general methods(can be called by manager, admin or member)
-        rs.getAllRooms();
-        List<Amenities> amenities = as.viewAllAmenities();
-        amenities.forEach(System.out::println);
-
-        List<Meetings> allmeetings = ms.viewMeetings(); //method accessible to all
-        allmeetings.forEach(System.out::println);
-
-
-
-        //convert Date object to timestamp because in SQL the format is in that manner.
-        //This time is given to the meeting object to book the meeting.
-        //scanner in needed
-        LocalDateTime startDateTime = LocalDateTime.of(2024, 8, 20, 9, 0);  // '2024-08-20 09:00:00'
-        LocalDateTime endDateTime = LocalDateTime.of(2024, 8, 20, 10, 0);  // '2024-08-20 10:00:00
-        Timestamp startTime = Timestamp.valueOf(startDateTime);
-        Timestamp endTime = Timestamp.valueOf(endDateTime);
-
-        //ask user and then store in list
-        List<String> selectedAmenities = Arrays.asList("hja", "Coffee Machine"); // selected amenities of the user.
-        //these need to be scanner in'd in the while loop. (Only accessible to the manager)
-        //accessible to manager and admin
-
-        ms.bookMeetingWithDefaultRoom(19,2,startTime,endTime, MeetingServiceImpl.DefaultRoom.CLASSROOM_TRAINING);
-        ms.bookMeetingWithCustomRoom(21,1, startTime, endTime, selectedAmenities, 10);
+            switch (adminOption) {
+                case 1:
+                    System.out.println("Enter User ID:");
+                    String userId = scanner.nextLine();
+                    System.out.println("Enter UserName:");
+                    String username = scanner.nextLine();
+                    System.out.println("Enter User Password:");
+                    String password = scanner.nextLine();
+                    System.out.println("Enter Name:");
+                    String Name = scanner.nextLine();
+                    System.out.println("Enter User Email:");
+                    String email = scanner.nextLine();
+                    System.out.println("Enter User PhoneNumber:");
+                    String phone = scanner.nextLine();
+                    System.out.println("Enter User Role:");
+                    String role = scanner.nextLine();
+                    System.out.println("Enter Credits:");
+                    int credits = Integer.parseInt(scanner.nextLine());
+                    userService.addUserdata(userId,username,password,Name,email,phone,role,credits);
+                    break;
 
 
-}}
+                case 2:
+                    System.out.println("Enter UserName to delete:");
+                    String user_name = scanner.nextLine();
+                    userService.deleteUserdata(user_name);
+                    break;
+                case 3:
+                    userService.getAllUsers();
+                    break;
+                case 4:
+                    System.out.println("Enter UserName to Search :");
+                    String userName = scanner.nextLine();
+                   userService.getUsersByUsername(userName);
+                    break;
+                case 5:
+                    System.out.println("Enter Room ID:");
+                    int roomId = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter Room Name:");
+                    String roomName = scanner.nextLine();
+                    System.out.println("Enter Seating Capacity:");
+                    int seatingCapacity = Integer.parseInt(scanner.nextLine());
+                    roomService.addRoom(roomId, roomName, seatingCapacity);
+                    break;
+                case 6:
+                    System.out.println("Enter Room ID to update:");
+                    roomId = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter new Room Name:");
+                    roomName = scanner.nextLine();
+                    System.out.println("Enter new Seating Capacity:");
+                    seatingCapacity = Integer.parseInt(scanner.nextLine());
+                    roomService.updateRoom(roomId, roomName, seatingCapacity);
+                    break;
+                case 7:
+                    System.out.println("Enter Meeting ID to delete:");
+                    String meetingId = scanner.nextLine();
+                    meetingService.deleteMeeting(meetingId);
+                    break;
+                case 8:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose a valid option.");
+            }
+        }
+    }
+
+    private static void managerMenu(Scanner scanner, RoomService roomService, AmenityService amenityService, MeetingService meetingService) {
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\n---- Manager Menu ----");
+            System.out.println("1. View All Rooms");
+            System.out.println("2. View All Amenities");
+            System.out.println("3. Book Meeting with Default Room");
+            System.out.println("4. Book Meeting with Custom Room");
+            System.out.println("5. View All Meetings");
+            System.out.println("6. Back to Main Menu");
+            System.out.print("Choose your option: ");
+            int managerOption = Integer.parseInt(scanner.nextLine());
+
+            switch (managerOption) {
+                case 1:
+                    roomService.getAllRooms();
+                    break;
+                case 2:
+                    List<Amenities> amenities = amenityService.viewAllAmenities();
+                    amenities.forEach(System.out::println);
+                    break;
+                case 3:
+                   // bookMeetingWithDefaultRoom(scanner, meetingService);
+                    System.out.println("Enter Meeting ID:");
+                    int meetingId = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter Room ID:");
+                    int roomId = Integer.parseInt(scanner.nextLine());
+                    Timestamp startTime = getTimestamp(scanner, "start");
+                    Timestamp endTime = getTimestamp(scanner, "end");
+
+                    System.out.println("Choose Default Room Option:");
+                    for (MeetingServiceImpl.DefaultRoom option : MeetingServiceImpl.DefaultRoom.values()) {
+                        System.out.println(option.name() + " - " + option.getAmenities() + " - " + option.getCost() + " credits");
+                    }
+                    String roomOptionName = scanner.nextLine();
+                    MeetingServiceImpl.DefaultRoom roomOption = MeetingServiceImpl.DefaultRoom.valueOf(roomOptionName);
+
+                    meetingService.bookMeetingWithDefaultRoom(meetingId, roomId, startTime, endTime, roomOption);
+                    break;
+
+                case 4:
+                    System.out.println("Enter Meeting ID:");
+                    int meetingIdC = Integer.parseInt(scanner.nextLine());
+
+                    System.out.println("Enter Room ID:");
+                    int roomIdC = Integer.parseInt(scanner.nextLine());
+
+                    Timestamp startTimeC = getTimestamp(scanner, "start");
+                    Timestamp endTimeC = getTimestamp(scanner, "end");
+
+                    System.out.println("Enter Seating Capacity:");
+                    int seatingCapacity = Integer.parseInt(scanner.nextLine());
+
+                    System.out.println("Select Amenities (comma separated):");
+                    List<Amenities> availableAmenities = amenityService.viewAllAmenities();
+
+                    availableAmenities.forEach(amenity -> System.out.println(amenity.getName() + " - " + amenity.getCost() + " credits"));
+                    String[] selectedAmenitiesArray = scanner.nextLine().split(",");
+                    List<String> selectedAmenities = Arrays.asList(selectedAmenitiesArray);
+
+                    meetingService.bookMeetingWithCustomRoom(meetingIdC, roomIdC, startTimeC, endTimeC, selectedAmenities, seatingCapacity);
+                  //  bookMeetingWithCustomRoom(scanner, amenityService, meetingService);
+                    break;
+                case 5:
+                    List<Meetings> allMeetings = meetingService.viewMeetings();
+                    allMeetings.forEach(System.out::println);
+                    break;
+                case 6:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose a valid option.");
+            }
+        }
+    }
+
+    private static void memberMenu(Scanner scanner, MeetingService meetingService) {
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\n---- Member Menu ----");
+            System.out.println("1. View All Meetings");
+            System.out.println("2. Back to Main Menu");
+            System.out.print("Choose your option: ");
+            int memberOption = Integer.parseInt(scanner.nextLine());
+
+            switch (memberOption) {
+                case 1:
+                    List<Meetings> allMeetings = meetingService.viewMeetings();
+                    allMeetings.forEach(System.out::println);
+                    break;
+                case 2:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose a valid option.");
+            }
+        }
+    }
+
+
+
+    private static Timestamp getTimestamp(Scanner scanner, String type) {
+        System.out.println("Enter " + type + " date and time (yyyy-MM-dd HH:mm:ss) :");
+        String dateTimeInput = scanner.nextLine();
+        LocalDateTime dateTime = LocalDateTime.parse(dateTimeInput.replace(" ", "T"));
+        return Timestamp.valueOf(dateTime);
+    }
+
+
+
+}

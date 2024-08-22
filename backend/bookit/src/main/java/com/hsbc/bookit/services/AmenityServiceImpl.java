@@ -10,7 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AmenityServiceImpl {
+public class AmenityServiceImpl implements AmenityService{
+
+
     private final AmenityDAO amenityDAO = new AmenityDAOImpl();
     private Users authenticatedUser;
 
