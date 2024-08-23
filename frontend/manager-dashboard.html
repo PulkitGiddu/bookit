@@ -24,12 +24,12 @@
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar bg-light">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Products</a>
-        <a href="#">Solutions</a>
-        <a href="#">Pricing</a>
-        <a href="#">Resources</a>
-        <a href="#">Company</a>
-        <a href="#">Contact Us</a>
+        <a href="homepage.html">Products</a>
+        <a href="homepage.html">Solutions</a>
+        <a href="homepage.html">Pricing</a>
+        <a href="homepage.html">Resources</a>
+        <a href="homepage.html">Company</a>
+        <a href="homepage.html">Contact Us</a>
     </div>
 
      <!-- Main content -->
@@ -39,18 +39,20 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <span class="navbar-toggler-icon" onclick="openNav()"></span>
-                <a class="navbar-brand" href="#"><img src="./assets/img/bookitlogo.png" alt="Bookit" height="40px" ></a>
+                <a class="navbar-brand" href="homepage.html"><img src="./assets/img/bookitlogo.png" alt="Bookit" height="40px" ></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Solutions</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Company</a></li>
-                        <li class="nav-item"><a class="btn btn-primary" href="login.html">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html">Products</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html">Solutions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html">Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html">Resources</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html">Company</a></li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="homepage.html" onclick="logout()">Logout</a>
+                        </li>                      
                     </ul>
                 </div>
             </nav>
@@ -177,6 +179,12 @@
 
     <!-- custom js file import -->
     <script src="./js/homepage.js"></script>
+
+    <script>
+        function logout() {
+            window.location.href = 'homepage.html';
+        }
+    </script>
 
     <!-- fontawsome  -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>

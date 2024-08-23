@@ -15,12 +15,12 @@
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar bg-light">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Products</a>
-        <a href="#">Solutions</a>
-        <a href="#">Pricing</a>
-        <a href="#">Resources</a>
-        <a href="#">Company</a>
-        <a href="#">Contact Us</a>
+        <a href="homepage.html">Products</a>
+        <a href="homepage.html">Solutions</a>
+        <a href="homepage.html">Pricing</a>
+        <a href="homepage.html">Resources</a>
+        <a href="homepage.html">Company</a>
+        <a href="homepage.html">Contact Us</a>
     </div>
 
     <!-- Main content -->
@@ -36,13 +36,15 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Solutions</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Company</a></li>
-                            <li class="nav-item"><a class="btn btn-primary" href="login.html">Login</a></li>
-                        </ul>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Products</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Solutions</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Pricing</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Resources</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Company</a></li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary" href="homepage.html" onclick="logout()">Logout</a>
+                            </li> 
+                    </ul>
                     </div>
                 </nav>
             </div>
@@ -115,6 +117,13 @@
         </div>
     </div>
 </footer>
+
+<script>
+    function logout() {
+        window.location.href = 'homepage.html';
+    }
+</script>
+
 
     <script>
         feather.replace();
