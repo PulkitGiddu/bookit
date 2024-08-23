@@ -7,8 +7,12 @@ import com.hsbc.bookit.domain.Users;
 
 public class RoomServiceImpl implements RoomService {
 
+
     private final RoomDAO roomDAO = new RoomDAOImpl();
     private final LoginServiceImpl loginService = new LoginServiceImpl();
+
+
+
     private Users authenticatedUser;
     protected boolean adminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")){

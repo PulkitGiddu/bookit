@@ -21,6 +21,7 @@ footer {
 }
 
 #sidebar {
+    /* min-height: 100vh; */
     flex-shrink: 0;
     max-width: 200px;
     background-color: #343a40;

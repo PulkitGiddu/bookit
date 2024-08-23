@@ -2,6 +2,7 @@ package com.hsbc.bookit.services;
 
 import com.hsbc.bookit.dao.UserDAO;
 import com.hsbc.bookit.dao.UserDAOImpl;
+import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.AccessDeniedException;
 
@@ -24,15 +25,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void addUserdata(){
+    public void addUserdata(String id,String username,String password,String name,String email,String phone,String role,int credits){
         checkAdminAccess();
-        Users newUser = new Users("14", "kunalu", "324323", "Kunal", "k@gmail.com", "944923759", "manager", 0);
+        Users newUser = new Users(id,username,password,name,email,phone,role,credits);
         userdao.addUsers(authenticatedUser, newUser);
+        System.out.println("User added: " + name);
+
     }
 
-    public void deleteUserdata(){
+
+
+    public void deleteUserdata(String username){
         checkAdminAccess();
-        userdao.deleteUsers(authenticatedUser, "kunalu");
+        userdao.deleteUsers(authenticatedUser, username);
+        System.out.println("User deleted: " + username);
     }
 
     public void getAllUsers(){
@@ -42,9 +48,9 @@ public class UserServiceImpl implements UserService {
         users.clear();
     }
 
-    public void getUsersByUsername(){
+    public void getUsersByUsername(String username){
         checkAdminAccess();
-        users = userdao.getUsersbyusername("janesmith");
+        users = userdao.getUsersbyusername(username);
         users.forEach(System.out::println);
         users.clear();
 

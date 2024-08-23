@@ -14,6 +14,8 @@ public class MeetingServiceImpl implements MeetingService {
 
     List<Meetings> meetings;
     private int seatingcost;
+
+
     private final UserDAO userDAO = new UserDAOImpl();
     private final MeetingDAO meetingDAO = new MeetingDAOImpl();
     private final AmenityServiceImpl amenityService = new AmenityServiceImpl();
