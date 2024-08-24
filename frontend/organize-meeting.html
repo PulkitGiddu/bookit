@@ -22,13 +22,19 @@
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar bg-light">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="homepage.html">Products</a>
+        <!-- <a href="homepage.html">Products</a>
         <a href="homepage.html">Solutions</a>
         <a href="homepage.html">Pricing</a>
         <a href="homepage.html">Resources</a>
         <a href="homepage.html">Company</a>
-        <a href="homepage.html">Contact Us</a>
-    </div>
+        <a href="homepage.html">Contact Us</a> -->
+        <a href="homepage.html">Main Page</a>
+        <a href="manager-dashboard.html">Manager Dashboard</a>
+        <a href="homepage.html#highlights">Highlights</a>
+        <a href="homepage.html#working">See Working</a>
+        <a href="homepage.html#features">Features</a>
+    </div>  
+
     <!-- Main content -->
     <div id="main">
         <!-- Header Section -->
@@ -44,12 +50,16 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="homepage.html">Products</a></li>
-                            <li class="nav-item"><a class="nav-link" href="homepage.html">Solutions</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Main Page</a></li>
+                            <li class="nav-item"><a class="nav-link" href="manager-dashboard.html">Manager Dashboard</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="homepage.html">Solutions</a></li>
                             <li class="nav-item"><a class="nav-link" href="homepage.html">Pricing</a></li>
                             <li class="nav-item"><a class="nav-link" href="homepage.html">Resources</a></li>
-                            <li class="nav-item"><a class="nav-link" href="homepage.html">Company</a></li>
-                            <li class="nav-item"><button class="btn btn-primary" onclick="window.location.href = 'homepage.html';">Logout</button></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Company</a></li> -->
+                            <li class="nav-item"><a class="nav-link" href="homepage.html#highlights">Highlights</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html#working">See Working</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html#features">Features</a></li>
+                            <li class="nav-item"><a class="btn btn-primary" href="homepage.html" onclick="logout()">Logout</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -121,7 +131,7 @@
                 <div id="creditWarning" class="alert alert-warning d-none">
                     <p>Insufficient credits. Please adjust your booking or contact support.</p>
                 </div>
-                <button type="submit" class="btn btn-primary">Book</button>
+                <button type="submit" class="btn btn-primary" onclick="window.location.href = 'manager-dashboard.html';" >Book</button>
             </form>
         </div>
     </section>
