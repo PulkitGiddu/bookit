@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
     public void deleteUserdata(String username) {
         checkAdminAccess();
         userdao.deleteUsers(authenticatedUser, username);
-        System.out.println("User deleted: " + username);
     }
 
     public void getAllUsers() {

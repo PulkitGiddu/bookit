@@ -6,6 +6,7 @@ import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.AccessDeniedException;
 import com.hsbc.bookit.exceptions.NotEnoughCreditsException;
+import com.hsbc.bookit.exceptions.SameDateTimeException;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MeetingServiceImpl implements MeetingService {
         this.roomDAO = roomDAO;
     }
 
-    protected boolean adminAccess() {
+    public boolean adminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")) {
             return false;
         }
@@ -84,8 +85,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     // Function to select and book a predefined room
-    public void bookMeetingWithDefaultRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, DefaultRoom roomOption) throws NotEnoughCreditsException{
+    public void bookMeetingWithDefaultRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, DefaultRoom roomOption) throws NotEnoughCreditsException, SameDateTimeException {
         checkAccess();
+
+        if (startTime.equals(endTime)) {
+            throw new SameDateTimeException("Start time and end time cannot be the same.");
+        }
 
         // Calculate total cost based on default room option
         int totalCost = roomOption.getCost();
@@ -116,8 +121,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
     // =========================================================================================================== //
     // Function to book meeting with custom options (seating capacity and selected amenities)
-    public void bookMeetingWithCustomRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) {
+    public void bookMeetingWithCustomRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) throws SameDateTimeException {
         checkAccess();
+
+        if (startTime.equals(endTime)) {
+            throw new SameDateTimeException("Start time and end time cannot be the same.");
+        }
 
         int totalCostOfAmenities = amenityService.chooseAmenitiesAndCalculateCredits(selectedAmenities);
 

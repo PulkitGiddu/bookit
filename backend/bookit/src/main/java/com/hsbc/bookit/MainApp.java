@@ -3,11 +3,13 @@ package com.hsbc.bookit;
 import com.hsbc.bookit.domain.Amenities;
 import com.hsbc.bookit.domain.Meetings;
 import com.hsbc.bookit.domain.Users;
+import com.hsbc.bookit.exceptions.SameDateTimeException;
 import com.hsbc.bookit.services.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,10 +17,11 @@ import static com.mysql.cj.protocol.a.MysqlTextValueDecoder.getTimestamp;
 
 //testing all the methods for now
 public class MainApp {
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         Scanner scanner = new Scanner(System.in);
-        LoginServiceImpl loginService = new LoginServiceImpl();
+        Calendar calendar = Calendar.getInstance();
+        LoginServiceImpl loginService = new LoginServiceImpl(calendar);
 
         // Authentication
         System.out.println("Enter username:");
@@ -55,10 +58,14 @@ public class MainApp {
                     break;
 
                 case 2:
-                    if (authenticatedUser.getRole().equalsIgnoreCase("manager")) {
-                        managerMenu(scanner, roomService, amenityService, meetingService);
+                    if (authenticatedUser.getRole().equalsIgnoreCase("manager") || authenticatedUser.getRole().equalsIgnoreCase("admin")) {
+                        try {
+                            managerMenu(scanner, roomService, amenityService, meetingService);
+                        } catch (SameDateTimeException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
-                        System.out.println("Access denied. Manager access only.");
+                        System.out.println("Access denied. Manager/Admin access only.");
                     }
                     break;
 
@@ -163,7 +170,7 @@ public class MainApp {
         }
     }
 
-    private static void managerMenu(Scanner scanner, RoomService roomService, AmenityService amenityService, MeetingService meetingService) {
+    private static void managerMenu(Scanner scanner, RoomService roomService, AmenityService amenityService, MeetingService meetingService) throws SameDateTimeException {
         boolean exit = false;
 
         while (!exit) {

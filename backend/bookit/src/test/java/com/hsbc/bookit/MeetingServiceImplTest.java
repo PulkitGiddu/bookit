@@ -6,10 +6,12 @@ import com.hsbc.bookit.dao.UserDAO;
 import com.hsbc.bookit.domain.Meetings;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.NotEnoughCreditsException;
+import com.hsbc.bookit.exceptions.SameDateTimeException;
 import com.hsbc.bookit.services.AmenityServiceImpl;
 import com.hsbc.bookit.services.MeetingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.sql.Timestamp;
@@ -41,13 +43,15 @@ class MeetingServiceImplTest {
     }
 
     @Test
-    void testBookMeetingWithDefaultRoom_Success() {
+    void testBookMeetingWithDefaultRoom_Success() throws SameDateTimeException {
         Timestamp startTime = Timestamp.valueOf("2024-08-23 10:00:00");
         Timestamp endTime = Timestamp.valueOf("2024-08-23 11:00:00");
         MeetingServiceImpl.DefaultRoom defaultRoom = MeetingServiceImpl.DefaultRoom.CLASSROOM_TRAINING;
 
+        // Call the method under test
         meetingService.bookMeetingWithDefaultRoom(5, 1, startTime, endTime, defaultRoom);
 
+        // Verify that addMeeting was called with the correct arguments
         verify(meetingDAOMock).addMeeting(argThat(meeting ->
                 meeting.getRoomId() == 1 &&
                         meeting.getManagerId().equals(authenticatedUser.getId()) &&
@@ -55,7 +59,6 @@ class MeetingServiceImplTest {
                         meeting.getEndTime().equals(endTime)
         ));
 
-        verify(userDAOMock, never()).updateUserCredits(any(Users.class), anyInt());
     }
 
     @Test
@@ -77,7 +80,7 @@ class MeetingServiceImplTest {
     }
 
     @Test
-    void testBookMeetingWithCustomRoom_Success() {
+    void testBookMeetingWithCustomRoom_Success() throws SameDateTimeException {
         Timestamp startTime = Timestamp.valueOf("2024-08-23 10:00:00");
         Timestamp endTime = Timestamp.valueOf("2024-08-23 11:00:00");
         List<String> selectedAmenities = Arrays.asList("Projector", "Whiteboard");

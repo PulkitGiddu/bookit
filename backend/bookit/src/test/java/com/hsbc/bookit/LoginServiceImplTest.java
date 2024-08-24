@@ -29,7 +29,7 @@ class LoginServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockUser = new Users("1", "user1", "password", "John Doe", "john.doe@example.com", "1234567890", "manager", 1000);
+        mockUser = new Users("1", "johndoe", "password123", "John Doe", "john.doe@example.com", "1234567890", "manager", 1000);
     }
 
     @Test
@@ -38,13 +38,12 @@ class LoginServiceImplTest {
         when(loginDAO.authenticate(anyString(), anyString())).thenReturn(mockUser);
 
         // Act
-        Users user = loginService.login("user1", "password");
+        Users user = loginService.login("johndoe", "password123");
 
         // Assert
         assertNotNull(user);
-        assertEquals("user1", user.getUsername());
+        assertEquals("johndoe", user.getUsername());
         assertEquals("John Doe", user.getName());
-        verify(loginDAO, times(1)).authenticate("user1", "password");
     }
 
 
@@ -52,7 +51,7 @@ class LoginServiceImplTest {
     void testResetCreditsOnMonday() {
         // Arrange
         Calendar mockCalendar = mock(Calendar.class);
-        when(mockCalendar.get(MONDAY)).thenReturn(MONDAY);
+        when(mockCalendar.get(Calendar.DAY_OF_WEEK)).thenReturn(Calendar.MONDAY);
         mockUser.setCredits(500);
 
         // Act

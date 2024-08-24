@@ -6,12 +6,12 @@ import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.AccessDeniedException;
 
+import java.util.Calendar;
+
 public class RoomServiceImpl implements RoomService {
-
-
+    Calendar calendar = Calendar.getInstance();
     private RoomDAO roomDAO = new RoomDAOImpl();
-    private LoginServiceImpl loginService = new LoginServiceImpl();
-
+    private LoginServiceImpl loginService = new LoginServiceImpl(calendar);
 
 
     public Users authenticatedUser;

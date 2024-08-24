@@ -8,6 +8,11 @@ import java.util.Calendar;
 
 public class LoginServiceImpl implements LoginService {
     LoginDAO logindao = new LoginDAOImpl();
+    private Calendar calendar;
+    public LoginServiceImpl(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
     public Users login(String username, String password) {
         Users authenticatedUser = logindao.authenticate(username, password);
 
