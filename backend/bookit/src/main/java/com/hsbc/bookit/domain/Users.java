@@ -1,5 +1,7 @@
 package com.hsbc.bookit.domain;
 
+import java.util.Objects;
+
 public class Users {
     private String id;
     private String username;
@@ -10,7 +12,19 @@ public class Users {
     private String role;
     private int credits;
 
-    public Users(String id, String username,String password, String  name, String email, String phone, String role, int credits) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Users users)) return false;
+        return credits == users.credits && Objects.equals(id, users.id) && Objects.equals(username, users.username) && Objects.equals(password, users.password) && Objects.equals(name, users.name) && Objects.equals(email, users.email) && Objects.equals(phone, users.phone) && Objects.equals(role, users.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, name, email, phone, role, credits);
+    }
+
+    public Users(String id, String username, String password, String  name, String email, String phone, String role, int credits) {
         this.id = id;
         this.username = username;
         this.password = password;

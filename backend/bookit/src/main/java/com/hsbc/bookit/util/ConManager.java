@@ -8,7 +8,7 @@ public class ConManager {
     public static Connection getConnection(){
         try {
             return DriverManager.getConnection
-                    ("jdbc:mysql://localhost/bookitdb","root","Yukdighe@2002");
+                    ("jdbc:mysql://localhost/bookitdb","root","7355Nav#14");
         } catch (SQLException e) {
             System.out.println("Connection Error:" + e.getMessage());
         }

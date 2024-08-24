@@ -1,6 +1,8 @@
 package com.hsbc.bookit.domain;
 
 
+import java.util.Objects;
+
 public class Rooms {
     private int id;
     private String name;
@@ -10,6 +12,18 @@ public class Rooms {
         this.id = id;
         this.name = name;
         this.seatingCapacity = seatingCapacity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rooms rooms)) return false;
+        return id == rooms.id && seatingCapacity == rooms.seatingCapacity && Objects.equals(name, rooms.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, seatingCapacity);
     }
 
     public int getId() {
