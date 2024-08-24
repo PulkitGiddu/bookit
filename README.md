@@ -1,4 +1,4 @@
-# BOOKIT
+# BOOKiT
 
 ![Bookit Logo](./frontend/assets/img/bookitlogo.png)
 
