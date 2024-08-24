@@ -113,7 +113,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<Users> getUsersbyusername(String username) {
+        List<Users> users = new ArrayList<>();
         Users user = null;
+        boolean found = false;
         try {
             Connection con = ConManager.getConnection();
             String sql = "SELECT * FROM Users WHERE username = ?";
@@ -123,6 +125,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()) {
+                found = true;
                 // Create the Users object and populate it with data from the ResultSet
                 user = new Users(
                         rs.getString("id"),
@@ -135,6 +138,9 @@ public class UserDAOImpl implements UserDAO {
                         rs.getInt("credits")
                 );
                 users.add(user);
+            }
+            if (!found) {
+                System.out.println("Username not found");
             }
             rs.close();
             statement.close();

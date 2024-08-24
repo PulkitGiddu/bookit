@@ -1,6 +1,7 @@
 package com.hsbc.bookit.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Meetings {
     private int id;
@@ -65,6 +66,18 @@ public class Meetings {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Meetings meetings)) return false;
+        return id == meetings.id && roomId == meetings.roomId && Objects.equals(managerId, meetings.managerId) && Objects.equals(startTime, meetings.startTime) && Objects.equals(endTime, meetings.endTime) && Objects.equals(status, meetings.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roomId, managerId, startTime, endTime, status);
     }
 
     @Override

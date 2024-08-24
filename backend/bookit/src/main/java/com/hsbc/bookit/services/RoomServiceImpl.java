@@ -4,16 +4,26 @@ import com.hsbc.bookit.dao.RoomDAO;
 import com.hsbc.bookit.dao.RoomDAOImpl;
 import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
+import com.hsbc.bookit.exceptions.AccessDeniedException;
+
+import java.util.Calendar;
 
 public class RoomServiceImpl implements RoomService {
+    Calendar calendar = Calendar.getInstance();
+    private RoomDAO roomDAO = new RoomDAOImpl();
+    private LoginServiceImpl loginService = new LoginServiceImpl(calendar);
 
 
-    private final RoomDAO roomDAO = new RoomDAOImpl();
-    private final LoginServiceImpl loginService = new LoginServiceImpl();
+    public Users authenticatedUser;
+    public RoomServiceImpl(){
 
+    }
+    public RoomServiceImpl(RoomDAO roomDAO, LoginServiceImpl loginService) {
 
+        this.roomDAO = roomDAO;
+        this.loginService = loginService;
+    }
 
-    private Users authenticatedUser;
     protected boolean adminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")){
             return false;
@@ -23,20 +33,26 @@ public class RoomServiceImpl implements RoomService {
 
 
     public void addRoom(int id,String roomName, int seatingCapacity) {
-        adminAccess();
+        if (!adminAccess()) {
+            throw new AccessDeniedException("Access denied");
+        }
         Rooms room = new Rooms(id,roomName, seatingCapacity);
         roomDAO.addRoom(room);
         System.out.println("Room added: " + roomName);
     }
 
     public void updateRoom(int roomId, String roomName, int seatingCapacity) {
-        adminAccess();
+        if (!adminAccess()) {
+            throw new AccessDeniedException("Access denied");
+        }
         roomDAO.updateRoom(roomId, roomName, seatingCapacity);
         System.out.println("Room updated: " + roomName);
     }
 
     public void deleteRoom(int roomId) {
-        adminAccess();
+        if (!adminAccess()) {
+            throw new AccessDeniedException("Access denied");
+        }
         roomDAO.deleteRoom(roomId);
         System.out.println("Room deleted: " + roomId);
     }

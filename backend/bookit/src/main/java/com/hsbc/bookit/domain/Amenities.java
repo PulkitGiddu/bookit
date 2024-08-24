@@ -1,5 +1,7 @@
 package com.hsbc.bookit.domain;
 
+import java.util.Objects;
+
 public class Amenities {
 
     private int id;
@@ -33,6 +35,18 @@ public class Amenities {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Amenities amenities)) return false;
+        return id == amenities.id && cost == amenities.cost && Objects.equals(name, amenities.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, cost);
     }
 
     @Override

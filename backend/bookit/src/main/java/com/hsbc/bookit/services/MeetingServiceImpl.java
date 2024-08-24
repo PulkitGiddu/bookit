@@ -6,6 +6,7 @@ import com.hsbc.bookit.domain.Rooms;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.AccessDeniedException;
 import com.hsbc.bookit.exceptions.NotEnoughCreditsException;
+import com.hsbc.bookit.exceptions.SameDateTimeException;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -16,10 +17,10 @@ public class MeetingServiceImpl implements MeetingService {
     private int seatingcost;
 
 
-    private final UserDAO userDAO = new UserDAOImpl();
-    private final MeetingDAO meetingDAO = new MeetingDAOImpl();
-    private final AmenityServiceImpl amenityService = new AmenityServiceImpl();
-    private final RoomDAO roomDAO = new RoomDAOImpl();  // Add the RoomDAO for predefined rooms
+    private UserDAO userDAO = new UserDAOImpl();
+    private MeetingDAO meetingDAO = new MeetingDAOImpl();
+    private AmenityServiceImpl amenityService = new AmenityServiceImpl();
+    private RoomDAO roomDAO = new RoomDAOImpl();  // Add the RoomDAO for predefined rooms
 
     Users authenticatedUser;
 
@@ -27,7 +28,16 @@ public class MeetingServiceImpl implements MeetingService {
         this.authenticatedUser = authenticatedUser;
     }
 
-    protected boolean adminAccess() {
+    public MeetingServiceImpl(Users authenticatedUser, UserDAO userDAO, MeetingDAO meetingDAO, AmenityServiceImpl amenityService, RoomDAO roomDAO) {
+        if (authenticatedUser == null) throw new IllegalArgumentException("Authenticated user cannot be null");
+        this.authenticatedUser = authenticatedUser;
+        this.userDAO = userDAO;
+        this.meetingDAO = meetingDAO;
+        this.amenityService = amenityService;
+        this.roomDAO = roomDAO;
+    }
+
+    public boolean adminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")) {
             return false;
         }
@@ -75,8 +85,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     // Function to select and book a predefined room
-    public void bookMeetingWithDefaultRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, DefaultRoom roomOption) {
+    public void bookMeetingWithDefaultRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, DefaultRoom roomOption) throws NotEnoughCreditsException, SameDateTimeException {
         checkAccess();
+
+        if (startTime.equals(endTime)) {
+            throw new SameDateTimeException("Start time and end time cannot be the same.");
+        }
 
         // Calculate total cost based on default room option
         int totalCost = roomOption.getCost();
@@ -107,8 +121,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
     // =========================================================================================================== //
     // Function to book meeting with custom options (seating capacity and selected amenities)
-    public void bookMeetingWithCustomRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) {
+    public void bookMeetingWithCustomRoom(int id, int roomId, Timestamp startTime, Timestamp endTime, List<String> selectedAmenities, int seatingCapacity) throws SameDateTimeException {
         checkAccess();
+
+        if (startTime.equals(endTime)) {
+            throw new SameDateTimeException("Start time and end time cannot be the same.");
+        }
 
         int totalCostOfAmenities = amenityService.chooseAmenitiesAndCalculateCredits(selectedAmenities);
 
