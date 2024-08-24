@@ -36,20 +36,30 @@
   
 ## Screenshots
 1. Login Page:
+
 ![Login Page](./frontend/assets/img/LoginPage.png)
 
-2. Highlights Page:
+
+3. Highlights Page:
+   
 ![Highlights](./frontend/assets/img/Highlights.png)
 
-3. Admin Page:
+5. Admin Page:
+   
 ![Admin Page](./frontend/assets/img/AdminDashboard.png)
 
-4. Create Room Page:
+
+7. Create Room Page:
+   
 ![CreateRoom Page](./frontend/assets/img/CreateRoom.png)
 
-5. Organize Meeting Page:
+
+9. Organize Meeting Page:
+
+    
 ![OrganizeMeeting Page](./frontend/assets/img/OrganizeMeeting.png)
 _Include screenshots of the key interfaces: Admin Dashboard, Manager Booking Page, Member View, etc._
+
 
 ## Installation & Setup
 
