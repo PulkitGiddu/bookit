@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 public class LoginDAOImpl implements LoginDAO {
 
+    // ****************************************************************** //
     @Override
     //this method checks the database for an existing username and password entered at the time of login
     //if the username and password is correct it will create a user object and send it to the login service.
@@ -48,6 +49,8 @@ public class LoginDAOImpl implements LoginDAO {
         return user; // Return null if authentication fails
     }
 
+    // ****************************************************************** //
+    //method to reset the credits of the manager to 2000 (used in the LoginService)
     public void resetCredits(Users user) {
         if (user.getRole().equalsIgnoreCase("manager")) {
             user.setCredits(2000);

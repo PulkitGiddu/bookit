@@ -15,7 +15,7 @@ public class AmenityDAOImpl implements AmenityDAO {
         conn = ConManager.getConnection(); // Utility to handle DB connection
     }
 
-
+    //method which allows adding of amenities to the table
     public void addAmenity(Amenities amenity) {
         String query = "INSERT INTO Amenities (name, cost) VALUES (?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -27,6 +27,7 @@ public class AmenityDAOImpl implements AmenityDAO {
         }
     }
 
+    //update an existing amenity
     public void updateAmenity(int amenityId, String name, int cost) {
         String query = "UPDATE Amenities SET name = ?, cost = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -39,7 +40,7 @@ public class AmenityDAOImpl implements AmenityDAO {
         }
     }
 
-
+    //delete amenities from the database
     public void deleteAmenity(int amenityId) {
         String query = "DELETE FROM Amenities WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -50,7 +51,7 @@ public class AmenityDAOImpl implements AmenityDAO {
         }
     }
 
-
+    //view all amenities
     public List<Amenities> getAllAmenities() {
         String query = "SELECT * FROM Amenities";
         try (Statement stmt = conn.createStatement();
@@ -65,7 +66,7 @@ public class AmenityDAOImpl implements AmenityDAO {
         }
         return amenitiesList;
     }
-
+    //calculate the amount of credits based on the amenities selected
     public int selectAmenitiesAndCalculateCredits(List<String> selectedAmenities) {
         int totalCredits = 0;
 

@@ -24,24 +24,28 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    //add a user to the database
     public void addUserdata(String id, String username, String password, String name, String email, String phone, String role, int credits) {
-        checkAdminAccess();
+        checkAdminAccess(); //if admin, then allowed to access the method, else it will throw an exception
         Users newUser = new Users(id, username, password, name, email, phone, role, credits);
         userdao.addUsers(authenticatedUser, newUser);
         System.out.println("User added: " + name);
     }
 
+    //delete user data
     public void deleteUserdata(String username) {
         checkAdminAccess();
         userdao.deleteUsers(authenticatedUser, username);
     }
 
+    //view all users
     public void getAllUsers() {
         checkAdminAccess();
         List<Users> users = userdao.findUsers();
         users.forEach(System.out::println);
     }
 
+    //view users based on the username
     public void getUsersByUsername(String username) {
         checkAdminAccess();
         List<Users> users = userdao.getUsersbyusername(username);

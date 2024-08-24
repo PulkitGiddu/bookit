@@ -20,6 +20,8 @@ public class MeetingDAOImpl implements MeetingDAO{
         conn = ConManager.getConnection(); // Utility to handle DB connection
     }
 
+    // ****************************************************************** //
+    //add a meeting into the database
     @Override
     public void addMeeting(Meetings meeting) {
         String query = "INSERT INTO Meetings (id,room_id, manager_id, start_time, end_time, status) VALUES (?,?, ?, ?, ?, ?)";
@@ -36,6 +38,8 @@ public class MeetingDAOImpl implements MeetingDAO{
         }
     }
 
+    // ****************************************************************** //
+    //remove a meeting from the database
     @Override
     public void removeMeeting(String id) {
         String query = "DELETE FROM Meetings WHERE id = ?";
@@ -52,6 +56,8 @@ public class MeetingDAOImpl implements MeetingDAO{
         }
     }
 
+    // ****************************************************************** //
+    //view all the meetings currently scheduled
     @Override
     public List<Meetings> viewAllMeetings() {
         String query = "SELECT * FROM Meetings";

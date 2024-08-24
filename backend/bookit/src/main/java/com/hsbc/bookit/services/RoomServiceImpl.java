@@ -24,6 +24,7 @@ public class RoomServiceImpl implements RoomService {
         this.loginService = loginService;
     }
 
+    //check if the user trying to access the methods is an admin or not
     protected boolean adminAccess() {
         if (authenticatedUser == null || !authenticatedUser.getRole().equalsIgnoreCase("admin")){
             return false;
@@ -32,31 +33,25 @@ public class RoomServiceImpl implements RoomService {
     }
 
 
+    //enter new room data
     public void addRoom(int id,String roomName, int seatingCapacity) {
-        if (!adminAccess()) {
-            throw new AccessDeniedException("Access denied");
-        }
         Rooms room = new Rooms(id,roomName, seatingCapacity);
         roomDAO.addRoom(room);
         System.out.println("Room added: " + roomName);
     }
 
+    //update the room data
     public void updateRoom(int roomId, String roomName, int seatingCapacity) {
-        if (!adminAccess()) {
-            throw new AccessDeniedException("Access denied");
-        }
         roomDAO.updateRoom(roomId, roomName, seatingCapacity);
         System.out.println("Room updated: " + roomName);
     }
 
     public void deleteRoom(int roomId) {
-        if (!adminAccess()) {
-            throw new AccessDeniedException("Access denied");
-        }
         roomDAO.deleteRoom(roomId);
         System.out.println("Room deleted: " + roomId);
     }
 
+    //view all the rooms in the system
     public void getAllRooms() {
         roomDAO.getAllRooms().forEach(System.out::println);
     }

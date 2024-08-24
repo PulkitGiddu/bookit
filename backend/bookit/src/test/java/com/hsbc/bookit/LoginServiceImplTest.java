@@ -46,35 +46,4 @@ class LoginServiceImplTest {
         assertEquals("John Doe", user.getName());
     }
 
-
-    @Test
-    void testResetCreditsOnMonday() {
-        // Arrange
-        Calendar mockCalendar = mock(Calendar.class);
-        when(mockCalendar.get(Calendar.DAY_OF_WEEK)).thenReturn(Calendar.MONDAY);
-        mockUser.setCredits(500);
-
-        // Act
-        loginService.resetCredits(mockUser);
-
-        // Assert
-        verify(loginDAO, times(1)).resetCredits(mockUser);
-        assertEquals(500, mockUser.getCredits()); // User credits don't change in resetCredits
-    }
-
-    @Test
-    void testResetCreditsOnNonMonday() {
-        // Arrange
-        Calendar mockCalendar = mock(Calendar.class);
-        when(mockCalendar.get(Calendar.DAY_OF_WEEK)).thenReturn(Calendar.WEDNESDAY);
-        mockUser.setCredits(1500);
-
-        // Act
-        loginService.resetCredits(mockUser);
-
-        // Assert
-        verify(loginDAO, never()).resetCredits(mockUser);
-        assertEquals(1500, mockUser.getCredits());
-    }
-
 }

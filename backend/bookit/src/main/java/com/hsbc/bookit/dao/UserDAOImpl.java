@@ -14,6 +14,7 @@ public class UserDAOImpl implements UserDAO {
     List<Users> users = new ArrayList<>();
     Connection con = null;
 
+    // ****************************************************************** //
     //this function can only be used by an admin,the logic is written in UserService
     @Override
     public boolean addUsers(Users authenticatedUser, Users newUser) {
@@ -41,6 +42,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    // ****************************************************************** //
     @Override
     public boolean deleteUsers(Users authenticatedUser,String username) {
         try{
@@ -59,6 +61,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    // ****************************************************************** //
     @Override
     public int updateUsers(Users authenticatedUser,Users user) {
         try {
@@ -78,6 +81,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    // ****************************************************************** //
     @Override
     public List<Users>  findUsers() {
         Users user = null;
@@ -111,6 +115,7 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    // ****************************************************************** //
     @Override
     public List<Users> getUsersbyusername(String username) {
         List<Users> users = new ArrayList<>();
@@ -152,6 +157,7 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    // ****************************************************************** //
     @Override
     public void updateUserCredits(Users authenticatedUser, int credits) {
         try {
