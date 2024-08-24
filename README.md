@@ -35,6 +35,8 @@
 - **Credit Management**: Ensures that managers stay within their allocated budget through an intuitive credit system, promoting efficient use of resources.
   
 ## Screenshots
+1. Login Page:
+![login](https://ibb.co/LSkJFhg][img]https://i.ibb.co/LSkJFhg/Screenshot-116.png)
 
 _Include screenshots of the key interfaces: Admin Dashboard, Manager Booking Page, Member View, etc._
 
