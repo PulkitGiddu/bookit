@@ -36,8 +36,7 @@
   
 ## Screenshots
 1. Login Page:
-![login](https://ibb.co/LSkJFhg][img]https://i.ibb.co/G7xt63M/Screenshot-116.png[/img)
-
+[url=https://ibb.co/LSkJFhg][img]https://i.ibb.co/G7xt63M/Screenshot-116.png[/img][/url]
 _Include screenshots of the key interfaces: Admin Dashboard, Manager Booking Page, Member View, etc._
 
 ## Installation & Setup
