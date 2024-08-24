@@ -1,6 +1,7 @@
 package com.hsbc.bookit.dao;
 
 import com.hsbc.bookit.domain.Rooms;
+import com.hsbc.bookit.exceptions.DuplicateEntryException;
 import com.hsbc.bookit.util.ConManager;
 
 import java.sql.*;
@@ -16,7 +17,8 @@ public class RoomDAOImpl implements RoomDAO {
     public RoomDAOImpl() {
         conn = ConManager.getConnection(); // Utility to handle DB connection
     }
-
+    // ****************************************************************** //
+    //add a new room to the db
     @Override
     public void addRoom(Rooms room) {
         String query = "INSERT INTO Rooms (id,name, seating_capacity) VALUES (?,?,?)";
@@ -26,10 +28,15 @@ public class RoomDAOImpl implements RoomDAO {
             stmt.setInt(3, room.getSeatingCapacity());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                throw new DuplicateEntryException("A room with ID " + room.getId() + " already exists.");
+            } else {
+                e.printStackTrace(); // Handle other SQL exceptions
+            }
         }
     }
-
+    // ****************************************************************** //
+    //update details of an existing room
     @Override
     public void updateRoom(int roomId, String roomName, int seatingCapacity) {
         String query = "UPDATE Rooms SET name = ?, seating_capacity = ? WHERE id = ?";
@@ -42,7 +49,8 @@ public class RoomDAOImpl implements RoomDAO {
             e.printStackTrace();
         }
     }
-
+    // ****************************************************************** //
+    //delete an existing room
     @Override
     public void deleteRoom(int roomId) {
         String query = "DELETE FROM Rooms WHERE id = ?";
@@ -53,7 +61,8 @@ public class RoomDAOImpl implements RoomDAO {
             e.printStackTrace();
         }
     }
-
+    // ****************************************************************** //
+    //view all the rooms currently available for meetings
     @Override
     public List<Rooms> getAllRooms() {
         String query = "SELECT * FROM Rooms";
@@ -70,7 +79,6 @@ public class RoomDAOImpl implements RoomDAO {
         }
         return roomsList;
     }
-
 
     // ****************************************************************** //
     // Method to fetch room by name Default

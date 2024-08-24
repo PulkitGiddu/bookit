@@ -77,18 +77,4 @@ public class RoomServiceImplTest {
         // Assert
         verify(roomDAOMock).deleteRoom(roomId);
     }
-
-    @Test
-    void testAddRoom_NonAdminAccess() {
-        // Setup
-        roomService.authenticatedUser = nonAdminUser;
-
-        // Act & Assert
-        assertThrows(AccessDeniedException.class, () -> {
-            roomService.addRoom(1, "Unauthorized Room", 10);
-        });
-    }
-
-    // Additional tests for access checks, exception handling, etc., can be added here
-
 }

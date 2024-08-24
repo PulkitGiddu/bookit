@@ -13,12 +13,16 @@ public class LoginServiceImpl implements LoginService {
         this.calendar = calendar;
     }
 
+    // ======================================================================= //
+    //authenticate the user
     public Users login(String username, String password) {
         Users authenticatedUser = logindao.authenticate(username, password);
 
         return authenticatedUser;
     }
 
+    // ======================================================================= //
+    //reset the credits of the manager if it is monday, otherwise only display the credits
     public void resetCredits(Users user){
         Calendar calendar= Calendar.getInstance();
         if(calendar.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY){

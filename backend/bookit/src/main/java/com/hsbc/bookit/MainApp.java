@@ -4,16 +4,17 @@ import com.hsbc.bookit.domain.Amenities;
 import com.hsbc.bookit.domain.Meetings;
 import com.hsbc.bookit.domain.Users;
 import com.hsbc.bookit.exceptions.SameDateTimeException;
+import com.hsbc.bookit.exceptions.WrongDateFormatException;
 import com.hsbc.bookit.services.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
-
-import static com.mysql.cj.protocol.a.MysqlTextValueDecoder.getTimestamp;
 
 //testing all the methods for now
 public class MainApp {
@@ -123,8 +124,6 @@ public class MainApp {
                     int credits = Integer.parseInt(scanner.nextLine());
                     userService.addUserdata(userId,username,password,Name,email,phone,role,credits);
                     break;
-
-
                 case 2:
                     System.out.println("Enter UserName to delete:");
                     String user_name = scanner.nextLine();
@@ -271,13 +270,16 @@ public class MainApp {
         }
     }
 
-
-
     private static Timestamp getTimestamp(Scanner scanner, String type) {
-        System.out.println("Enter " + type + " date and time (yyyy-MM-dd HH:mm:ss) :");
-        String dateTimeInput = scanner.nextLine();
-        LocalDateTime dateTime = LocalDateTime.parse(dateTimeInput.replace(" ", "T"));
-        return Timestamp.valueOf(dateTime);
+        System.out.println("Enter date and time (yyyy-MM-dd HH:mm:ss) :");
+        String input = scanner.nextLine();
+
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            return Timestamp.valueOf(dateTime);
+        } catch (DateTimeParseException e) {
+            throw new WrongDateFormatException("Invalid  date and time format. Please use 'yyyy-MM-dd HH:mm:ss'.");
+        }
     }
 
 
