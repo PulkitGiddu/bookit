@@ -13,6 +13,14 @@
     
 }
 
+/* .hero{
+    background-image: url("./../assets/img/bgimg2.jpg");
+    background-repeat: no-repeat;
+    background-size: 80vw 80vh;
+    height: 100vh;
+    background-position: 10vw 10vw;
+} */
+
 /* Sidebar links */
 .sidebar a {
     padding: 10px 15px;

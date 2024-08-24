@@ -17,39 +17,42 @@
     <!-- Sidebar -->
     <div id="mySidebar" class="sidebar bg-light">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Products</a>
-        <a href="#">Solutions</a>
-        <a href="#">Pricing</a>
-        <a href="#">Resources</a>
-        <a href="#">Company</a>
-        <a href="#">Contact Us</a>
+        <a href="homepage.html">Products</a>
+        <a href="homepage.html">Solutions</a>
+        <a href="homepage.html">Pricing</a>
+        <a href="homepage.html">Resources</a>
+        <a href="homepage.html">Company</a>
+        <a href="homepage.html">Contact Us</a>
     </div>
+    <!-- Main content -->
     <div id="main">
         <!-- Header Section -->
-        <header class="bg-light py-2">
-            <div class="container">
+        <header class="bg-light py-2 w-100 position-fixed">
+            <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <span class="navbar-toggler-icon" onclick="openNav()"></span>
-                    <a class="navbar-brand" href="#"><img src="./assets/img/bookitlogo.png" alt="Bookit" height="40px" ></a>
+                    <a class="navbar-brand me-auto" href="./homepage.html">
+                        <img src="./assets/img/bookitlogo.png" alt="Bookit" height="40px">
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Solutions</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Company</a></li>
-                            <li class="nav-item"><a class="btn btn-primary" href="login.html">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Products</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Solutions</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Pricing</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Resources</a></li>
+                            <li class="nav-item"><a class="nav-link" href="homepage.html">Company</a></li>
+                            <li class="nav-item"><button class="btn btn-primary" onclick="window.location.href = 'homepage.html';">Logout</button></li>
                         </ul>
                     </div>
-                </nav>
+        </nav>
             </div>
-        </header>
-        </div>
+        </header>   
+    </div>
     
-    <div class="container py-5">
+    <div class="container py-5 my-5">
         <h2>Notifications</h2>
         <form id="notificationsForm">
             <div class="mb-3">
@@ -112,25 +115,25 @@
                         <li class="list-inline-item">
                             <a href="#" class="btn btn-outline-light bg-light btn-floating btn-sm">
                                 <!-- <i class="fab fa-facebook-f"></i> -->
-                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/facebook-f.svg" alt="facebook" class="m-1" width="20px" height="20px" >
+                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/facebook-f.svg" alt="facebook" class="m-1" width="15px" height="20px" >
                             </a>
                         </li>
                         <li class="list-inline-item">
                             <a href="#" class="btn btn-outline-light bg-light btn-floating btn-sm">
                                 <!-- <i class="fab fa-twitter"></i> -->
-                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/twitter.svg" alt="twitter" class="m-1" width="20px" height="20px" >
+                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/twitter.svg" alt="twitter" class="m-1" width="15px" height="20px" >
                             </a>
                         </li>
                         <li class="list-inline-item">
                             <a href="#" class="btn btn-outline-light bg-light btn-floating btn-sm">
                                 <!-- <i class="fab fa-linkedin-in"></i> -->
-                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/linkedin.svg" alt="linkedin" class="m-1" width="20px" height="20px" >
+                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/linkedin.svg" alt="linkedin" class="m-1" width="15px" height="20px" >
                             </a>
                         </li>
                         <li class="list-inline-item">
                             <a href="#" class="btn btn-outline-light bg-light btn-floating btn-sm">
                                 <!-- <i class="fab fa-instagram"></i> -->
-                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/instagram.svg" alt="instagram" class="m-1" width="20px" height="20px" >
+                                <img src="./assets/img/fontawesome-free-6.6.0-web/svgs/brands/instagram.svg" alt="instagram" class="m-1" width="15px" height="20px" >
                             </a>
                         </li>
                     </ul>
@@ -151,6 +154,12 @@
     <script>
         feather.replace();
     </script>
+
+<script>
+    function logout() {
+        window.location.href = 'homepage.html';
+    }
+</script>
 
     <!-- js for bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
