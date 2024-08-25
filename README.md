@@ -58,7 +58,16 @@
 
     
 ![OrganizeMeeting Page](./frontend/assets/img/OrganizeMeeting.png)
-_Include screenshots of the key interfaces: Admin Dashboard, Manager Booking Page, Member View, etc._
+
+10. Manager Dashboard Page:
+
+    
+![Manager Dashboard Page](./frontend/assets/img/ManageDashboard.png)
+
+11.. Member Dashboard Page:
+
+    
+![Member Dashboard Page](./frontend/assets/img/MemberDashboard.png)
 
 
 ## Installation & Setup
