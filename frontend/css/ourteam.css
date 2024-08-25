@@ -3,7 +3,7 @@
 }
 
 section {
-    padding: 60px 0;
+    padding: px 0;
 }
 
 section .section-title {
@@ -18,41 +18,29 @@ section .section-title {
     background: #ffffff;
 }
 
+/* Override the flip effect */
 .image-flip:hover .backside,
-.image-flip.hover .backside {
-    -webkit-transform: rotateY(0deg);
-    -moz-transform: rotateY(0deg);
-    -o-transform: rotateY(0deg);
-    -ms-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-    border-radius: .25rem;
-}
-
+.image-flip.hover .backside,
 .image-flip:hover .frontside,
 .image-flip.hover .frontside {
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
-    transform: rotateY(180deg);
+    -webkit-transform: none;
+    -moz-transform: none;
+    -o-transform: none;
+    transform: none;
 }
 
 .mainflip {
-    -webkit-transition: 1s;
-    -webkit-transform-style: preserve-3d;
-    -ms-transition: 1s;
-    -moz-transition: 1s;
-    -moz-transform: perspective(1000px);
-    -moz-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    transition: 1s;
-    transform-style: preserve-3d;
+    -webkit-transition: none;
+    -webkit-transform-style: flat;
+    -ms-transition: none;
+    -moz-transition: none;
+    transition: none;
+    transform-style: flat;
     position: relative;
 }
 
 .frontside {
     position: relative;
-    -webkit-transform: rotateY(0deg);
-    -ms-transform: rotateY(0deg);
     z-index: 2;
     margin-bottom: 30px;
 }
@@ -62,32 +50,14 @@ section .section-title {
     top: 0;
     left: 0;
     background: white;
-    -webkit-transform: rotateY(-180deg);
-    -moz-transform: rotateY(-180deg);
-    -o-transform: rotateY(-180deg);
-    -ms-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
-    -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-    -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
     box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
 }
 
 .frontside,
 .backside {
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
     backface-visibility: hidden;
-    -webkit-transition: 1s;
-    -webkit-transform-style: preserve-3d;
-    -moz-transition: 1s;
-    -moz-transform-style: preserve-3d;
-    -o-transition: 1s;
-    -o-transform-style: preserve-3d;
-    -ms-transition: 1s;
-    -ms-transform-style: preserve-3d;
-    transition: 1s;
-    transform-style: preserve-3d;
+    transition: none;
+    transform-style: flat;
 }
 
 .frontside .card,
@@ -105,17 +75,15 @@ section .section-title {
     color: #292b2c !important;
 }
 
-.custom-card-text{
+.custom-card-text {
     color: #00000050;
 }
 
 .frontside .card .card-body img {
     width: 120px;
     height: 120px;
-    /* border-radius: 50%; */
 }
 
-.img-fluid{
-    /* width: 160px !important; */
+.img-fluid {
     height: 150px !important;
 }
