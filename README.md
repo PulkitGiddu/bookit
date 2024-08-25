@@ -79,9 +79,9 @@ Contributions are welcome! Please fork this repository, make your changes, and s
 
 ## Credits
 
-- **Developed by**: Your Team Name or Individual Name
-- **Design**: Your Design Team
-- **Testing**: Your Testing Team
+- **Developed by**: Kunal Umbrani, Anikka Pandey, Srilaya Bhuvanagiri, Yukta Dighe, Pulkit Giddu
+- **Design**: Akhilesh Ingole, Kedar Koshti, Manish Bhamare
+- **Testing**: Amika Singh
 
 ## License
 
