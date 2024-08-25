@@ -90,7 +90,7 @@ Contributions are welcome! Please fork this repository, make your changes, and s
 
 - **Developed by**: Kunal Umbrani, Anikka Pandey, Srilaya Bhuvanagiri, Yukta Dighe, Pulkit Giddu
 - **Design**: Akhilesh Ingole, Kedar Koshti, Manish Bhamare
-- **Testing**: Amika Singh
+- **Testing**: Amita Singh
 
 ## License
 
