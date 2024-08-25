@@ -1,4 +1,4 @@
-# BOOKIT
+# Bookit
 
 ![Bookit Logo](./frontend/assets/img/bookitlogo.png)
 
@@ -35,8 +35,31 @@
 - **Credit Management**: Ensures that managers stay within their allocated budget through an intuitive credit system, promoting efficient use of resources.
   
 ## Screenshots
+1. Login Page:
 
+![Login Page](./frontend/assets/img/LoginPage.png)
+
+
+3. Highlights Page:
+   
+![Highlights](./frontend/assets/img/Highlights.png)
+
+5. Admin Page:
+   
+![Admin Page](./frontend/assets/img/AdminDashboard.png)
+
+
+7. Create Room Page:
+   
+![CreateRoom Page](./frontend/assets/img/CreateRoom.png)
+
+
+9. Organize Meeting Page:
+
+    
+![OrganizeMeeting Page](./frontend/assets/img/OrganizeMeeting.png)
 _Include screenshots of the key interfaces: Admin Dashboard, Manager Booking Page, Member View, etc._
+
 
 ## Installation & Setup
 
