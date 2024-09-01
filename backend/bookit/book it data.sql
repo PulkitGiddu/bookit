@@ -46,10 +46,10 @@ CREATE TABLE Meetings (
 -- Adding data
 
 INSERT INTO Users (id, username, password, name, email, phone, role, credits) VALUES 
-("1", 'johndoe', 'password123', 'John Doe', 'john.doe@example.com', '123-456-7890', 'Admin', 100),
-("2", 'janesmith', 'password456', 'Jane Smith', 'jane.smith@example.com', '987-654-3210', 'Manager', 50),
-("3", 'alicejohnson', 'password789', 'Alice Johnson', 'alice.johnson@example.com', '555-555-5555', 'Member', 25),
-("4", 'bobwilliams', 'password321', 'Bob Williams', 'bob.williams@example.com', '444-444-4444', 'Member', 10);
+("1", 'johndoe', 'password123', 'John Doe', 'john.doe@example.com', '123-456-7890', 'Admin', 0),
+("2", 'janesmith', 'password456', 'Jane Smith', 'jane.smith@example.com', '987-654-3210', 'Manager', 2000),
+("3", 'alicejohnson', 'password789', 'Alice Johnson', 'alice.johnson@example.com', '555-555-5555', 'Member', 0),
+("4", 'bobwilliams', 'password321', 'Bob Williams', 'bob.williams@example.com', '444-444-4444', 'Member', 0);
 
 INSERT INTO Rooms (id,name, seating_capacity) VALUES 
 ("1",'Conference Room A', 10),
@@ -72,3 +72,5 @@ select * from Meetings;
 select * from users;
 select * from rooms;
 
+
+drop database bookitdb;
