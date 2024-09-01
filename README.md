@@ -42,7 +42,8 @@
 
 3. Highlights Page:
    
-![Highlights](./frontend/assets/img/Highlights.png)
+![Highlights](./frontend/assets/img/newhomepage.jpg)
+![Highlights](./frontend/assets/img/newhomepage2.jpg)
 
 5. Admin Page:
    
